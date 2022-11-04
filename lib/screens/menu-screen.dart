@@ -281,6 +281,8 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                       foodId: data.food?[index1].pairId,
                       isWineList: true,
                       menuName: data.food?[index1].foodName,
+                      foodImage: data.food?[index1].image,
+                      discription: data.food?[index1].description,
                     ),
                   ));
             }
@@ -494,10 +496,10 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               height: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFFB41712),
+                                
                               ),
                               child: Image.network(
-                                data.food![index].image ?? data.food![index].itemImage!,
+                                data.food?[index1].image ?? 'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg',
                                 
                                 fit: BoxFit.cover,
                               ),
@@ -524,7 +526,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                                     ),
                                   ),
                                   Text(
-                                    data.food?[index1].description ?? '',
+                                    data.food?[index1].description ?? "no description",
                                     textAlign: TextAlign.start,
                                     maxLines: 2,
                                     style: TextStyle(
@@ -538,10 +540,10 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               ),
                             ),
                           ),
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              "£223",
+                              '£/${data.food?[index1].price}',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 19),
                             ),

@@ -18,13 +18,15 @@ class ItemScreen extends StatefulWidget {
   final MenuData? menuData;
   final bool? isWineList;
   final dynamic foodId;
+  final dynamic? foodImage;
+  final dynamic? discription;
 
   const ItemScreen(
       {Key? key,
         this.menuName,
         this.menuData,
         this.isWineList = false,
-        this.foodId})
+        this.foodId, this.foodImage, this.discription})
       : super(key: key);
 
   @override
@@ -68,12 +70,11 @@ class _ItemScreenState extends State<ItemScreen> {
               child: Column(
                 children: [
                   Container(
-                      decoration: const BoxDecoration(
-                        color: backGroundColor,
+                      decoration:  BoxDecoration(
+                        
                         image: DecorationImage(
-                          image: AssetImage(
-                            Res.food_static,
-                          ),
+                          image: NetworkImage(widget.foodImage ?? 'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg',),
+                          fit: BoxFit.cover
                         ),
                       ),
                       height: 30.h,
@@ -105,7 +106,7 @@ class _ItemScreenState extends State<ItemScreen> {
                     height: 20,
                   ),
                   Text(
-                   "Loremhioidzokjhxckk jkdujdxkoklkkjiuijkjcjkikikdjjm cncijdnncijjdnncikcmm",
+                   widget.discription ?? "no discription",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
