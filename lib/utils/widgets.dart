@@ -53,10 +53,10 @@ Widget buttonWidget(
               fontSize: 14.sp,
             ),
           ),
-          const Icon(
-            Icons.navigate_next,
-            color: Colors.white,
-          )
+          // const Icon(
+          //   Icons.navigate_next,
+          //   color: Colors.white,
+          // )
         ],
       ),
     ),

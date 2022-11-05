@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chirz/Model/base_model.dart';
 import 'package:chirz/Model/item_detail_model.dart';
@@ -18,8 +17,6 @@ import 'package:flutter_xlider/flutter_xlider.dart';
 
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
-
-
 
 import '../main.dart';
 import 'cartScreen.dart';
@@ -39,18 +36,17 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
   bool isLoading = true;
   ItemDetailModel? itemDetailModel;
   bool descTextShowFlag = false;
-  double _value=0;
- double _lowerValue=0;
- double _upperValue=0;
-  double _lowerValue1=0;
-  double _upperValue1=0;
-
+  double _value = 0;
+  double _lowerValue = 0;
+  double _upperValue = 0;
+  double _lowerValue1 = 0;
+  double _upperValue1 = 0;
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     itemDetails();
-    if (userData != null) getRatings();
+    getRatings();
     super.initState();
   }
 
@@ -59,8 +55,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return
-      commanScreen(
+    return commanScreen(
       scaffold: Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -69,7 +64,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
           automaticallyImplyLeading: false,
-          leading:GestureDetector(
+          leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
@@ -86,16 +81,19 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
               child: (userData == null)
                   ? Container()
                   : IconButton(
-                onPressed: () {
-                  addToFavourites();
-                },
-                icon: ((itemDetailModel?.data?.isFavourite ?? 1) == 1)?
-                const Icon(Icons.favorite, color: Colors.red,)
-                    : const Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.black,
-                ),
-              ),
+                      onPressed: () {
+                        addToFavourites();
+                      },
+                      icon: ((itemDetailModel?.data?.isFavourite ?? 1) == 1)
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.favorite_border_rounded,
+                              color: Colors.black,
+                            ),
+                    ),
             ),
             // GestureDetector(
             //   onTap: () {
@@ -123,7 +121,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         body: SingleChildScrollView(
           child: Container(
             // margin: EdgeInsets.all(10.0),
-            child: isLoading ? Container()
+            child: isLoading
+                ? Container()
                 : itemDetailModel?.data == null
                     ? Container()
                     : Column(
@@ -131,8 +130,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            padding:EdgeInsets.symmetric(horizontal: 3.h, vertical: 1.5),
-                              child: Center(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 1.5),
+                            child: Center(
                               child: Text(
                                 (itemDetailModel?.data?.itemName ?? ''),
                                 textAlign: TextAlign.center,
@@ -147,9 +147,12 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                             // margin: EdgeInsets.only(
                             //     top: (userData == null) ? 2.h : 6.h),
                           ),
-                          const SizedBox(height: 10.0,),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
                           Container(
-                            padding:EdgeInsets.symmetric(horizontal: 3.h, vertical: 1.5) ,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 1.5),
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               // borderRadius: BorderRadius.circular(20.0),
@@ -161,241 +164,332 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                               children: [
                                 Center(
                                   child: Container(
-                                     padding:EdgeInsets.only(left: 5.h, right: 5.h,top:4.h),
-                                child: Text(
-                                        itemDetailModel?.data?.aboutWine ?? '',
-                                  overflow: descTextShowFlag ? TextOverflow.visible: TextOverflow.ellipsis,
-                                        maxLines: descTextShowFlag ? 8 : 2,textAlign: TextAlign.justify ,),
+                                    padding: EdgeInsets.only(
+                                        left: 5.h, right: 5.h, top: 4.h),
+                                    child: Text(
+                                      itemDetailModel?.data?.aboutWine ?? '',
+                                      overflow: descTextShowFlag
+                                          ? TextOverflow.visible
+                                          : TextOverflow.ellipsis,
+                                      maxLines: descTextShowFlag ? 8 : 2,
+                                      textAlign: TextAlign.justify,
+                                    ),
                                   ),
                                 ),
-                              Container(
-                                padding:EdgeInsets.only(left: 25.h, right: 5.h),
-                                child: InkWell(
-                                  onTap: (){ setState(() {
-                                    descTextShowFlag = !descTextShowFlag;
-                                  }); },
-                                  child: Container(
-
-                                    child:
-                                      descTextShowFlag ? const Text("Read Less",style: TextStyle(color:Color(0xFFB41712),fontWeight: FontWeight.bold),) :  const Text("Read More",style: TextStyle(color:const Color(0xFFB41712),fontWeight: FontWeight.bold))
-
+                                Container(
+                                  padding:
+                                      EdgeInsets.only(left: 25.h, right: 5.h),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        descTextShowFlag = !descTextShowFlag;
+                                      });
+                                    },
+                                    child: Container(
+                                        child: descTextShowFlag
+                                            ? const Text(
+                                                "Read Less",
+                                                style: TextStyle(
+                                                    color: Color(0xFFB41712),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            : const Text("Read More",
+                                                style: TextStyle(
+                                                    color:
+                                                        const Color(0xFFB41712),
+                                                    fontWeight:
+                                                        FontWeight.bold))),
                                   ),
                                 ),
-                              ),
-                                const SizedBox(height: 10.0,),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
                                 Container(
                                   // padding: EdgeInsets.only(bottom: 1.h),
                                   // margin: EdgeInsets.only(top: 0.5.h),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 80.0,
-                                            alignment: Alignment.centerRight,
-                                            child: Text('Grape', style: textstyle,),
-                                          ),
-                                                    const SizedBox(width: 20.0,),
-                                                    Container(
-                                                      width: 100.0,
-
-                                                      alignment:Alignment.centerLeft,
-                                                      child: Text(itemDetailModel?.data?.typeOfGrape ??
-                                                      '',
-                                                      style: textstyle1,
-                                                      ),
-                                                    ),
-                                         ],
-                                      ),
-                                        const SizedBox(height: 10.0,),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                         children: [
-                                         Container(
-                                           width: 80.0,
-                                          alignment: Alignment.centerRight,
-
-                                             child: Text('Type', style: textstyle,)),
-                                           const SizedBox(width: 20.0,),
-                                                Container(
-                                                  width: 100.0,
-
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Text(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 80.0,
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                'Grape',
+                                                style: textstyle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                itemDetailModel
+                                                        ?.data?.typeOfGrape ??
+                                                    '',
+                                                style: textstyle1,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                                width: 80.0,
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  'Type',
+                                                  style: textstyle,
+                                                )),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
                                                   itemDetailModel
-                                                      ?.data?.itemType ??
-                                                  '',overflow: TextOverflow.ellipsis,
+                                                          ?.data?.itemType ??
+                                                      '',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   maxLines: 2,
                                                   style: textstyle1),
-                                                ),
-                                         ],
-                                      ),
-                                      const SizedBox(height: 10.0,),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10.0,
+                                        ),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                    width: 100.0,
-                                                    alignment: Alignment.centerRight,
-
-                                                 child: Text('Region', style: textstyle,)),
-                                                const SizedBox(width: 20.0,),
-                                                Container(
-                                                  width: 100.0,
-
-                                                  alignment: Alignment.centerLeft,
-                                                 child: Text(
-                                                     itemDetailModel
-                                                         ?.data?.region ??
-                                                         '',
-                                                     style: textstyle1),
-                                                ),
-
-                                                const SizedBox(width: 20.0,),
-
-                                          ],),const SizedBox(height: 10.0,),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                                width: 100.0,
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  'Region',
+                                                  style: textstyle,
+                                                )),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  itemDetailModel
+                                                          ?.data?.region ??
+                                                      '',
+                                                  style: textstyle1),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
                                               width: 100.0,
                                               alignment: Alignment.centerRight,
-
-                                              child: Text('Alcohol', style: textstyle,),),
-                                          const SizedBox(width: 20.0,),
-                                          Container(
-                                            width: 100.0,
-
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                                itemDetailModel?.data
-                                                    ?.alcoholPercentage+"%"??
-                                                    '',
-                                                style: textstyle1),
-                                          ),
-
-                                          const SizedBox(width: 20.0,),
-
-                                        ],),const SizedBox(height: 10.0,),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 100.0,
-                                            alignment: Alignment.centerRight,
-
-                                            child: Text('year', style: textstyle,)),
-                                          const SizedBox(width: 20.0,),
-                                          Container(
-                                            width: 100.0,
-
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                                itemDetailModel
-                                                    ?.data?.year ??
-                                                    '',
-                                                style: textstyle1),
-                                          ),
-
-                                          const SizedBox(width: 20.0,),
-
-                                        ],),
-
-                                       ]
-                                  ),
-
+                                              child: Text(
+                                                'Alcohol',
+                                                style: textstyle,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  itemDetailModel?.data
+                                                              ?.alcoholPercentage +
+                                                          "%" ??
+                                                      '',
+                                                  style: textstyle1),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                                width: 100.0,
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  'year',
+                                                  style: textstyle,
+                                                )),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  itemDetailModel?.data?.year ??
+                                                      '',
+                                                  style: textstyle1),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                          ],
+                                        ),
+                                      ]),
                                 ),
-                                const SizedBox(height: 10.0,),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
                               ],
                             ),
                           ),
-
-
                           Container(
-                            padding:EdgeInsets.symmetric(horizontal: 3.h, vertical: 1.5),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 1.5),
                             child: Column(
                               children: [
                                 Row(
                                   children: [
-                                    const Text("Sweetness",style:const TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),),
-                                    IconButton(onPressed: (){},
-                                        icon: const Icon(Icons.info_outline,color: Colors.red,size: 15.0,))
+                                    const Text(
+                                      "Sweetness",
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.info_outline,
+                                          color: Colors.red,
+                                          size: 15.0,
+                                        ))
                                   ],
                                 ),
                                 Container(
                                   child: Stack(
                                     children: [
                                       Container(
-                                        padding:const EdgeInsets.symmetric(horizontal: 0.0, vertical: 1.5),
-
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0.0, vertical: 1.5),
                                         width: 300.0,
                                         height: 8.0,
-                                        child:  Row(
+                                        child: Row(
                                           children: [
                                             Container(
                                               decoration: const BoxDecoration(
                                                   color: Color(0xffb66ffff),
-                                                  borderRadius: BorderRadius.only(topLeft:Radius.circular(50.0),bottomLeft: const Radius.circular(50.0))
-                                              ),
-                                              width:5.0,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  50.0),
+                                                          bottomLeft:
+                                                              const Radius
+                                                                      .circular(
+                                                                  50.0))),
+                                              width: 5.0,
                                             ),
                                             Container(
                                                 width: 10.0,
-                                                color: const Color(0xffb00ffcc)
-                                            ),
+                                                color:
+                                                    const Color(0xffb00ffcc)),
                                             Container(
                                                 width: 20.0,
-                                                color: const Color(0xffb99ff99)
-                                            ),
+                                                color:
+                                                    const Color(0xffb99ff99)),
                                             Container(
                                                 width: 115.0,
-                                                color: const Color(0xffbffff99)
-                                            ),
+                                                color:
+                                                    const Color(0xffbffff99)),
                                             Container(
-                                                width: 150.0,
-                                                decoration: const BoxDecoration(
-                                                    color: Color(0xffbffcc00),
-                                                    borderRadius: BorderRadius.only(topRight:Radius.circular(50.0),bottomRight: const Radius.circular(50.0))
-                                                ),
-
+                                              width: 150.0,
+                                              decoration: const BoxDecoration(
+                                                  color: Color(0xffbffcc00),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  50.0),
+                                                          bottomRight:
+                                                              const Radius
+                                                                      .circular(
+                                                                  50.0))),
                                             ),
-
                                           ],
                                         ),
                                       ),
                                       Container(
                                           height: 8.0,
-                                          padding:const EdgeInsets.symmetric(horizontal:0.0, vertical: 1.5),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0.0, vertical: 1.5),
                                           child: FlutterSlider(
                                             values: [_lowerValue],
                                             min: 0.0,
                                             max: 100.0,
-                                            onDragging:
-                                                (handlerIndex, lowerValue, upperValue) {
+                                            onDragging: (handlerIndex,
+                                                lowerValue, upperValue) {
                                               setState(() {
-                                                _upperValue=upperValue;
+                                                _upperValue = upperValue;
                                                 _lowerValue = lowerValue;
                                               });
                                             },
                                             handlerWidth: 30.0,
                                             trackBar: FlutterSliderTrackBar(
-                                                inactiveTrackBar: BoxDecoration(
-                                                  // borderRadius: BorderRadius.circular(20),
-                                                  // color: Colors.black12,
-                                                  border: Border.all(width: 0, color: Colors.transparent),
-                                                ),
-                                                activeTrackBar: const BoxDecoration(
-                                                    // borderRadius: BorderRadius.circular(4),
-                                                    color: Colors.transparent
-                                                ),
+                                              inactiveTrackBar: BoxDecoration(
+                                                // borderRadius: BorderRadius.circular(20),
+                                                // color: Colors.black12,
+                                                border: Border.all(
+                                                    width: 0,
+                                                    color: Colors.transparent),
+                                              ),
+                                              activeTrackBar: const BoxDecoration(
+                                                  // borderRadius: BorderRadius.circular(4),
+                                                  color: Colors.transparent),
                                             ),
                                             handler: FlutterSliderHandler(
                                               decoration: const BoxDecoration(),
@@ -406,7 +500,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 child: Container(
                                                   height: 50.0,
                                                   width: 5.0,
-                                                  color: Colors.red.shade900,),
+                                                  color: Colors.red.shade900,
+                                                ),
                                               ),
                                             ),
                                             // rightHandler: FlutterSliderHandler(
@@ -415,43 +510,64 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                             //     color: Colors.black,),
                                             // ),
                                             // handlerHeight: 50.0,
-                                          )
-
-                                      ),
+                                          )),
                                     ],
                                   ),
                                 ),
                                 Row(
                                   children: [
-                                    const Text("Acidity",style:TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),),
-                                    IconButton(onPressed: (){},
-                                        icon: const Icon(Icons.info_outline,color: Colors.red,size: 15.0,))
-
+                                    const Text(
+                                      "Acidity",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.info_outline,
+                                          color: Colors.red,
+                                          size: 15.0,
+                                        ))
                                   ],
                                 ),
                                 Container(
                                   child: Stack(
                                     children: [
                                       Container(
-                                        padding:const EdgeInsets.symmetric(horizontal: 0.0, vertical: 1.5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0.0, vertical: 1.5),
                                         width: 300.0,
                                         height: 8.0,
-                                        child:  Row(
+                                        child: Row(
                                           children: [
                                             Container(
                                               decoration: const BoxDecoration(
-                                                  color: const Color(0xffbffff99),
-                                                  borderRadius: const BorderRadius.only(topLeft:Radius.circular(50.0),bottomLeft: Radius.circular(50.0))
-                                              ),
-                                                width: 100.0,
+                                                  color:
+                                                      const Color(0xffbffff99),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  50.0),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  50.0))),
+                                              width: 100.0,
                                             ),
                                             Container(
-
                                               width: 200.0,
-                                                decoration: BoxDecoration(
-                                            color: Colors.red.shade200,
-                                   borderRadius: const BorderRadius.only(topRight:Radius.circular(50.0),bottomRight: Radius.circular(50.0))
-                                              ),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red.shade200,
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  50.0),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  50.0))),
                                             ),
                                           ],
                                         ),
@@ -459,31 +575,32 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                       Container(
                                           height: 8.0,
                                           // color: Colors.black,
-                                          padding:const EdgeInsets.symmetric(horizontal: 0.0, vertical: 1.5),
-                                          child:FlutterSlider(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0.0, vertical: 1.5),
+                                          child: FlutterSlider(
                                             handlerHeight: 50.0,
-                                            
+
                                             values: [_lowerValue1],
                                             min: 0.0,
                                             max: 100.0,
-                                            onDragging:
-                                                (handlerIndex1, lowerValue1, upperValue1) {
+                                            onDragging: (handlerIndex1,
+                                                lowerValue1, upperValue1) {
                                               setState(() {
-                                                _upperValue1=upperValue1;
+                                                _upperValue1 = upperValue1;
                                                 _lowerValue1 = lowerValue1;
                                               });
                                             },
                                             handlerWidth: 30.0,
-                                            trackBar: const FlutterSliderTrackBar(
-                                                inactiveTrackBar: BoxDecoration(
+                                            trackBar:
+                                                const FlutterSliderTrackBar(
+                                              inactiveTrackBar: BoxDecoration(
                                                   // borderRadius: BorderRadius.circular(20),
                                                   // // color: Colors.black12,
                                                   // border: Border.all(width: 3, color: Colors.transparent),
-                                                ),
-                                                activeTrackBar: BoxDecoration(
-                                                    // borderRadius: BorderRadius.circular(0),
-                                                    color: Colors.transparent
-                                                ),
+                                                  ),
+                                              activeTrackBar: BoxDecoration(
+                                                  // borderRadius: BorderRadius.circular(0),
+                                                  color: Colors.transparent),
                                             ),
                                             handler: FlutterSliderHandler(
                                               decoration: const BoxDecoration(),
@@ -491,9 +608,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 type: MaterialType.canvas,
                                                 color: Colors.transparent,
                                                 elevation: 5,
-                                                child: Container(height: 50.0,
+                                                child: Container(
+                                                  height: 50.0,
                                                   width: 5.0,
-                                                  color: Colors.red.shade900,),
+                                                  color: Colors.red.shade900,
+                                                ),
                                               ),
                                             ),
                                             // rightHandler: FlutterSliderHandler(
@@ -502,220 +621,277 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                             //     color: Colors.red.shade900,),
                                             // ),
                                             // handlerHeight: 50.0,
-                                          )
-
-                                      )
-
-
-
-
+                                          ))
                                     ],
                                   ),
                                 )
-
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20.0,),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
                           Container(
-                              padding:EdgeInsets.symmetric(horizontal: 3.h, vertical: 1.5) ,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 3.h, vertical: 1.5),
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
                                 color: Colors.grey.shade100,
                               ),
                               // margin: EdgeInsets.symmetric(horizontal: 3.h, vertical: 1.5),
-                            child:SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    // crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text("Comments",style:const TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),),
-                                      Container(
-                                        child: (userData == null)
-                                            ? Container()
-                                            : IconButton(
-                                          onPressed: () {
-                                            showRatingDialog();
-                                          },
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            color: Colors.red,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "Comments",
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Container(
+                                          child: IconButton(
+                                            onPressed: () {
+                                              (userData == null)
+                                                  ? customeDialog()
+                                                  : showRatingDialog();
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.red,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  (ratingModel?.data == null ||
-                                      (ratingModel?.data?.isEmpty ?? true))?
-                                  Container(
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                        'No comments currently available'),
-                                  ):
-                                  Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 0.h),
-                                    child: ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: ratingModel?.data?.length ?? 0,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          margin:
-                                          EdgeInsets.symmetric(vertical: 1.h),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 1.5.h, horizontal: 1.5.h),
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color:
-                                                  Colors.grey.withOpacity(0.5),
-                                                  spreadRadius: 5,
-                                                  blurRadius: 7,
-                                                  offset: const Offset(0,
-                                                      3), // changes position of shadow
-                                                ),
-                                              ],
-                                              color: Colors.white,
-                                              borderRadius: const BorderRadius.all(
-                                                  Radius.circular(15))),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: ratingModel
-                                                      ?.data?[index]
-                                                      .profileImage ??
-                                                      '',
-                                                  alignment: Alignment.center,
-                                                ),
-                                                height: 5.h,
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 1.h),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal: 1.h),
-                                                child: Column(
-                                                  children: [
-                                                    Text(ratingModel?.data?[index]
-                                                        .username ??
-                                                        ''),
-                                                    Text((ratingModel?.data?[index]
-                                                        .comment ??
-                                                        '')),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    RatingBar.builder(
-                                                      itemSize: 20,
-                                                      initialRating: double.parse(
-                                                          ratingModel?.data?[index]
-                                                              .rate ??
-                                                              '1'),
-                                                      minRating: 1,
-                                                      direction: Axis.horizontal,
-                                                      allowHalfRating: true,
-                                                      ignoreGestures: true,
-                                                      itemCount: 5,
-                                                      itemBuilder: (context, _) =>
-                                                          const Icon(
-                                                            Icons.star,
-                                                            color: Colors.amber,
-                                                          ),
-                                                      onRatingUpdate: (ratings) {
-                                                        rating = ratings.toString();
-                                                        print(rating);
-                                                      },
-                                                    ),
-                                                  ],
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ),
+                                    (ratingModel?.data == null ||
+                                            (ratingModel?.data?.isEmpty ??
+                                                true))
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            child: const Text(
+                                                'No comments currently available'),
+                                          )
+                                        : Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 0.h),
+                                            child: ListView.builder(
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount:
+                                                  ratingModel?.data?.length ??
+                                                      0,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 1.h),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 1.5.h,
+                                                      horizontal: 1.5.h),
+                                                  // decoration: BoxDecoration(
+                                                  //     boxShadow: [
+                                                  //       BoxShadow(
+                                                  //         color:
+                                                  //         Colors.grey.withOpacity(0.5),
+                                                  //         spreadRadius: 5,
+                                                  //         blurRadius: 7,
+                                                  //         offset: const Offset(0,
+                                                  //             3), // changes position of shadow
+                                                  //       ),
+                                                  //     ],
+                                                  //     color: Colors.white,
+                                                  //     borderRadius: const BorderRadius.all(
+                                                  //         Radius.circular(15))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // Container(
+                                                      //   child: CachedNetworkImage(
+                                                      //     imageUrl: ratingModel
+                                                      //         ?.data?[index]
+                                                      //         .profileImage ??
+                                                      //         '',
+                                                      //     alignment: Alignment.center,
+                                                      //   ),
+                                                      //   height: 5.h,
+                                                      //   margin: EdgeInsets.symmetric(
+                                                      //       horizontal: 1.h),
+                                                      // ),
+                                                      Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    1.h),
+                                                        child: Column(
+                                                          children: [
+                                                            Text(
+                                                                (ratingModel
+                                                                        ?.data?[
+                                                                            index]
+                                                                        .comment ??
+                                                                    ''),
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .italic)),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            RatingBar.builder(
+                                                              itemSize: 20,
+                                                              initialRating: double
+                                                                  .parse(ratingModel
+                                                                          ?.data?[
+                                                                              index]
+                                                                          .rate ??
+                                                                      '1'),
+                                                              minRating: 1,
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              allowHalfRating:
+                                                                  true,
+                                                              ignoreGestures:
+                                                                  true,
+                                                              itemCount: 5,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                          _) =>
+                                                                      const Icon(
+                                                                Icons.star,
+                                                                color: Colors
+                                                                    .amber,
+                                                              ),
+                                                              onRatingUpdate:
+                                                                  (ratings) {
+                                                                rating = ratings
+                                                                    .toString();
+                                                                print(rating);
+                                                              },
+                                                            ),
+                                                            Text(
+                                                              ratingModel
+                                                                      ?.data?[
+                                                                          index]
+                                                                      .username ??
+                                                                  '',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16),
+                                                            ),
+                                                          ],
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              )),
                           const SizedBox(
                             height: 10,
                           ),
                           Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Container(
-                            // margin: EdgeInsets.only(bottom: 1.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10.h),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: RaisedGradientButton(
-                                        child: const Text(
-                                          'Add to cart',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        gradient: const LinearGradient(
-                                          colors: <Color>[
-                                            Color(0xFFB41712),
-                                            Color(0xFFB41712)
-                                          ],
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                        ),
-                                        onPressed: () {
-                                          if (userData == null) {
-                                            customeDialog();
-                                          } else {
-                                            setState(() {
-                                              isLoading = true;
-                                            });
-                                            Map map = {
-                                              'action': 'add_cart',
-                                              'item_id': itemDetailModel?.data?.id,
-                                              'user_id': userData?.data?.uId ?? '',
-                                              'qty': '1',
-                                              'price': groupValue == 0
-                                                  ? itemDetailModel
-                                                  ?.data?.pricePerGlass
-                                                  : groupValue == 1
-                                                  ? itemDetailModel
-                                                  ?.data?.pricePerBott
-                                                  : itemDetailModel
-                                                  ?.data?.pricePerCocktail,
-                                              'price_type': groupValue == 0
-                                                  ? 'glass'
-                                                  : groupValue == 1
-                                                  ? 'bottle'
-                                                  : 'cocktail1',
-                                              'cart_action': 'add'
-                                            };
-                                            addToCart(map);
-                                          }
-                                        }),
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Container(
+                              // margin: EdgeInsets.only(bottom: 1.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const SizedBox(
+                                    height: 10.0,
                                   ),
-                                ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-
-                              ],
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10.h),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: RaisedGradientButton(
+                                          child: const Text(
+                                            'Add to cart',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          gradient: const LinearGradient(
+                                            colors: <Color>[
+                                              Color(0xFFB41712),
+                                              Color(0xFFB41712)
+                                            ],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          ),
+                                          onPressed: () {
+                                            if (userData == null) {
+                                              customeDialog();
+                                            } else {
+                                              setState(() {
+                                                isLoading = true;
+                                              });
+                                              Map map = {
+                                                'action': 'add_cart',
+                                                'item_id':
+                                                    itemDetailModel?.data?.id,
+                                                'user_id':
+                                                    userData?.data?.uId ?? '',
+                                                'qty': '1',
+                                                'price': groupValue == 0
+                                                    ? itemDetailModel
+                                                        ?.data?.pricePerGlass
+                                                    : groupValue == 1
+                                                        ? itemDetailModel
+                                                            ?.data?.pricePerBott
+                                                        : itemDetailModel?.data
+                                                            ?.pricePerCocktail,
+                                                'price_type': groupValue == 0
+                                                    ? 'glass'
+                                                    : groupValue == 1
+                                                        ? 'bottle'
+                                                        : 'cocktail1',
+                                                'cart_action': 'add'
+                                              };
+                                              addToCart(map);
+                                            }
+                                          }),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                ],
+                              ),
                             ),
-                          ),
                           )
-
                         ],
                       ),
           ),
@@ -724,6 +900,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
       isLoading: isLoading,
     );
   }
+
   String? rating = '5';
   TextEditingController commentController = TextEditingController();
   TextStyle textStyle = TextStyle(
@@ -737,10 +914,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         height: 40.0,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          color:const Color(0xFFB41712),
-          borderRadius: BorderRadius.circular(20.0)
-        ),
+            shape: BoxShape.rectangle,
+            color: const Color(0xFFB41712),
+            borderRadius: BorderRadius.circular(20.0)),
         child: const Center(
           child: Text("Add Comment",
               style: TextStyle(
@@ -750,15 +926,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         ),
       ),
       onPressed: () async {
-
-          Navigator.pop(context);
-          await addRating();
+        Navigator.pop(context);
+        await addRating();
       },
     );
     Widget cancelButton = TextButton(
       child: const Text("Cancel",
           style: TextStyle(
-              color:Color(0xFFB41712),
+              color: Color(0xFFB41712),
               decorationColor: Colors.black,
               fontFamily: 'poppins')),
       onPressed: () {
@@ -777,7 +952,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         title: const Center(
           child: Text('Share your thoughts',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                   decorationColor: Colors.black,
                   fontFamily: 'poppins')),
@@ -785,9 +960,15 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Center(child:  Text("Your comment will be visible \n  within few hours",
-              textAlign:TextAlign.center,style: TextStyle(fontSize: 12.0,color: Colors.grey),)),
-           const SizedBox(height: 10.0,),
+            const Center(
+                child: Text(
+              "Your comment will be visible \n  within few hours",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.0, color: Colors.grey),
+            )),
+            const SizedBox(
+              height: 10.0,
+            ),
             RatingBar.builder(
               initialRating: 5,
               minRating: 1,
@@ -797,14 +978,16 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
               itemSize: 5.h,
               itemBuilder: (context, _) => const Icon(
                 Icons.star,
-                color:  Color(0xFFB41712),
+                color: Color(0xFFB41712),
               ),
               onRatingUpdate: (ratings) {
                 rating = ratings.toString();
                 print(rating);
               },
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(
+              height: 10.0,
+            ),
             TextFormField(
               controller: commentController,
               style: textStyle,
@@ -867,9 +1050,15 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Center(child: const Text("Your comment will be visible \n  within few hours",
-              textAlign:TextAlign.center,style: TextStyle(fontSize: 12.0,color: Colors.grey),)),
-            const SizedBox(height: 10.0,),
+            const Center(
+                child: const Text(
+              "Your comment will be visible \n  within few hours",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.0, color: Colors.grey),
+            )),
+            const SizedBox(
+              height: 10.0,
+            ),
             RatingBar.builder(
               initialRating: 5,
               minRating: 1,
@@ -877,17 +1066,18 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-
               itemBuilder: (context, _) => const Icon(
                 Icons.star,
-                color:  const Color(0xFFB41712),
+                color: const Color(0xFFB41712),
               ),
               onRatingUpdate: (ratings) {
                 rating = ratings.toString();
                 print(rating);
               },
             ),
-            const SizedBox(height: 10.0,),
+            const SizedBox(
+              height: 10.0,
+            ),
             TextFormField(
               controller: commentController,
               style: textStyle,
@@ -898,7 +1088,6 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                 return null;
               },
               keyboardType: TextInputType.text,
-
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 hoverColor: Colors.white,
@@ -946,12 +1135,16 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
         CartProviders().addToCartAPi(body).then((Response response) async {
           BaseModel baseModel = BaseModel.fromJson(json.decode(response.body));
           if (response.statusCode == 200 && baseModel.status == 1) {
-           await updateCartItems(context);
+            await updateCartItems(context);
             setState(() {
               isLoading = false;
             });
 
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen(),));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CartScreen(),
+                ));
           } else if (response.statusCode == 200 && baseModel.status == 2) {
             Widget okButton = TextButton(
               child: const Text("OK",
@@ -1227,15 +1420,20 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Center(
-                  child: Text("Login or register to complete this action",textAlign: TextAlign.center,style: TextStyle(fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                  ),),
+              padding: EdgeInsets.all(15.0),
+              child: Center(
+                child: Text(
+                  "Login or register to complete this action",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                //
-        //
-        ),
+              ),
+              //
+              //
+            ),
             // Padding(
             //   padding: EdgeInsets.all(15.0),
             //   child: Center(
@@ -1259,7 +1457,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                     color: Colors.grey,
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
-                    fontSize:12.0,
+                    fontSize: 12.0,
                   ),
                 ),
               ),
@@ -1275,16 +1473,18 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                     SizedBox(
                       height: 40.0,
                       width: MediaQuery.of(context).size.width,
-                      child:  OutlinedButton(
+                      child: OutlinedButton(
                         onPressed: () {
-                         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const LoginScreen()));
                         },
                         style: ButtonStyle(
-
-                          backgroundColor: MaterialStateProperty.all(const Color(0xFFB41712)),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFFB41712)),
                           // backgroundColor: Color(0xFFB41712),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0))),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
                         ),
                         child: Text(
                           "Login",
@@ -1314,13 +1514,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                         },
                         style: ButtonStyle(
                           // backgroundColor: MaterialStateProperty.all(Colors.black),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0))),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0))),
                         ),
                         child: Text(
                           "Register",
                           style: TextStyle(
-                            color:const Color(0xFFB41712),
+                            color: const Color(0xFFB41712),
                             fontWeight: FontWeight.w400,
                             fontFamily: fontFamily,
                             fontSize: 2.1.h,

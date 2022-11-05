@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chirz/Model/NewWinePairModel.dart';
 import 'package:chirz/main.dart';
 import 'package:chirz/providers/food_providers.dart';
@@ -283,6 +284,9 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                       menuName: data.food?[index1].foodName,
                       foodImage: data.food?[index1].image,
                       discription: data.food?[index1].description,
+                      priceBottle: data.food?[index1].pricePerBott,
+                      priceGlass: data.food?[index1].pricePerGlass,
+                      foodPrice: data.food?[index1].price,
                     ),
                   ));
             }
@@ -411,7 +415,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                     ],
                   ),
                 )
-              : index == ((foodItems?.data?.length ?? 0) - 1)
+              : index == ((data.food?.length ?? 0) - 1)
                   ? Container(
                       height: 12.h,
                       margin:
@@ -468,7 +472,8 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                         ],
                       ),
                     )
-                  : Container(
+                  : 
+                  Container(
                       width: MediaQuery.of(context).size.width,
                       height: 12.h,
                       margin:
@@ -492,16 +497,23 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                             child: Container(
                               width: 200,
                               clipBehavior: Clip.hardEdge,
-                              
+
                               height: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                
                               ),
-                              child: Image.network(
-                                data.food?[index1].image ?? 'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg',
-                                
-                                fit: BoxFit.cover,
+                              // child: Image.network(
+                              //   data.food?[index1].image ?? 'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg',
+
+                              //   fit: BoxFit.cover,
+                              // ),
+                              child: CachedNetworkImage(
+                                imageUrl: data.food?[index1].image ?? '' ,
+                                placeholder: (context, url) =>
+                                    Center(child: Center(child: CircularProgressIndicator())),
+                                errorWidget: (context, url, error) =>
+                                    Image.network('https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg'),
+                                    fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -525,8 +537,13 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                                       fontFamily: fontFamily,
                                     ),
                                   ),
+                                  
                                   Text(
-                                    data.food?[index1].description ?? "no description",
+                                    
+                                    data.food?[index1].description ??
+                                        "no description",
+
+                                    
                                     textAlign: TextAlign.start,
                                     maxLines: 2,
                                     style: TextStyle(
@@ -540,12 +557,12 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               ),
                             ),
                           ),
-                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '£/${data.food?[index1].price}',
+                              '£${data.food?[index1].price}',
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 19),
+                                  const TextStyle(color: Colors.black, fontSize: 19),
                             ),
                           )
                         ],
@@ -564,7 +581,6 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
           'restaurant_id': widget.restaurantId,
         }).then((Response response) async {
           foodItems = NwWinePairModel.fromJson(json.decode(response.body));
-          
 
           if (response.statusCode == 200 && foodItems?.status == 1) {
             setState(() {
