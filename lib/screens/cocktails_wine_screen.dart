@@ -332,7 +332,6 @@ class _CocktailOrWineScreenState extends State<CocktailOrWineScreen> {
   }
 
   getList() {
-
     checkInternet().then((internet) async {
       if (internet) {
         FoodItemsProviders()

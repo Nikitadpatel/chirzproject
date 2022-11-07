@@ -81,7 +81,7 @@ class _ItemScreenState extends State<ItemScreen> {
                         Stack(
                           children: [
                             Container(
-                              color: Colors.white,
+                              color: Colors.grey,
                               height: 26.h,
                               width: double.infinity,
                               child: CachedNetworkImage(
@@ -90,22 +90,34 @@ class _ItemScreenState extends State<ItemScreen> {
                                     (context, url, downloadProgress) =>
                                         CircularProgressIndicator(
                                             value: downloadProgress.progress),
-                                errorWidget: (context, url, error) => Image.network(
-                                    'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg'),
+                                errorWidget: (context, url, error) => Container(
+                                  width: double.infinity,
+                                  height: 26.h,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/Rectangle 51.png"),
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    "assets/images/Vector (3).png",
+                                  ),
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),
                             GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(top: 50, left: 30),
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.black,
-                                  ),
-                                ))
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 50, left: 30),
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -216,7 +228,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                               ),
                                             )),
                                         const SizedBox(
-                                          width: 25,
+                                          width: 10,
                                         ),
                                         GestureDetector(
                                           onTap: () {
@@ -259,279 +271,233 @@ class _ItemScreenState extends State<ItemScreen> {
                                         buttonCarouselController,
                                     items: (wineList?.data ?? [])
                                         .map(
-                                          (item) => Container(
-                                            margin: const EdgeInsets.all(10),
-                                            height: 50,
-                                            width: 200,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                            ),
-                                            clipBehavior: Clip.hardEdge,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                isLoading
-                                                    ? Container(
-                                                        color: Colors.white,
-                                                        child: const Center(
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                          color: Colors.blue,
-                                                        )),
-                                                      )
-                                                    : SizedBox(
-                                                        width: double.infinity,
-                                                        child: Column(
-                                                          children: [
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Padding(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      10),
-                                                              child: Text(
-                                                                wineList?.data ==
-                                                                        null
-                                                                    ? ''
-                                                                    : (wineList?.data?.isEmpty ??
-                                                                            true)
-                                                                        ? ''
-                                                                        : (wineList?.data?[sliderIndex].itemName ??
-                                                                            ''),
-                                                                maxLines: 2,
+                                          (item) => Card(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            elevation: 5,
+                                            color: Colors.white,
+                                            child: Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 30,
+                                                      vertical: 10),
+                                              height: 50,
+                                              width: 270,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                              ),
+                                              clipBehavior: Clip.hardEdge,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  isLoading
+                                                      ? Container(
+                                                          color: Colors.white,
+                                                          child: const Center(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                            color: Colors.blue,
+                                                          )),
+                                                        )
+                                                      : SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          child: Column(
+                                                            children: [
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                                child: Text(
+                                                                  wineList?.data ==
+                                                                          null
+                                                                      ? ''
+                                                                      : (wineList?.data?.isEmpty ??
+                                                                              true)
+                                                                          ? ''
+                                                                          : (wineList?.data?[sliderIndex].itemName ??
+                                                                              ''),
+                                                                  maxLines: 2,
 
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  // overflow: TextOverflow.ellipsis,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const Text(
+                                                                " 2022",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
-                                                                // overflow: TextOverflow.ellipsis,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 18,
-                                                                ),
                                                               ),
-                                                            ),
-                                                            const Text(
-                                                              " 2022",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            groupValue == 0
-                                                                ? Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceAround,
-                                                                    children: [
-                                                                      Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceAround,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Image
-                                                                              .asset(
-                                                                            groupValue == 0
-                                                                                ? Res.glass
-                                                                                : Res.cocktail,
-                                                                            width:
-                                                                                50,
-                                                                            height:
-                                                                                50,
-                                                                          ),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                15,
-                                                                          ),
-                                                                          Text(
-                                                                            "£${item.pricePerGlass}",
-                                                                            //     groupValue ==
-                                                                            // 0
-                                                                            // ? (item.pricePerGlass
-                                                                            // .toString() +
-                                                                            // '£')
-                                                                            // : groupValue ==
-                                                                            // 2
-                                                                            // ? (item.pricePeCocktail.toString() +
-                                                                            // '£')
-                                                                            // : '',
-                                                                            style: const TextStyle(
-                                                                                color: Colors.black,
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          const Text(
-                                                                            "per glass",
-                                                                            style:
-                                                                                TextStyle(color: Colors.black, fontSize: 13),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Image
-                                                                              .asset(
-                                                                            Res.bottle,
-                                                                            width:
-                                                                                50,
-                                                                            height:
-                                                                                50,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height:
-                                                                                15,
-                                                                          ),
-                                                                          Text(
-                                                                            // "£${wineList?.data?[sliderIndex].pricePerBott}",
+                                                              const SizedBox(
+                                                                height: 20,
+                                                              ),
+                                                              groupValue == 0
+                                                                  ? Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceAround,
+                                                                      children: [
+                                                                        Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceAround,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Image.asset(
+                                                                              // groupValue == 0
+                                                                              //     ? Res.glass
+                                                                              //     : Res.cocktail,
 
-                                                                            '£${item.pricePerBott}',
-                                                                            //     groupValue ==
-                                                                            // 0
-                                                                            // ? (item.pricePerBott
-                                                                            // .toString() +
-                                                                            // '£')
-                                                                            // : groupValue ==
-                                                                            // 2
-                                                                            // ? (item.pricePeCocktail.toString() +
-                                                                            // '£')
-                                                                            // : '',
-                                                                            style: const TextStyle(
-                                                                                color: Colors.black,
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          const Text(
-                                                                            "per bottle",
-                                                                            style:
-                                                                                TextStyle(color: Colors.black, fontSize: 13),
-                                                                          ),
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  )
-                                                                : Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceAround,
-                                                                    children: [
-                                                                      Image
-                                                                          .asset(
-                                                                        Res.cocktail,
-                                                                        width:
-                                                                            80,
-                                                                        height:
-                                                                            80,
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            10,
-                                                                      ),
-                                                                      Text(
-                                                                        "£${item.pricePeCocktail}",
-                                                                        style: const TextStyle(
-                                                                            color: Colors
-                                                                                .black,
-                                                                            fontSize:
-                                                                                18,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                            // item.itemImage ==
-                                                            //     null
-                                                            //     ? const CircularProgressIndicator()
-                                                            //     : SizedBox(
-                                                            //   height:
-                                                            //   200,
-                                                            //   child: Image
-                                                            //       .network(
-                                                            //     item.itemImage ??
-                                                            //         'Not Found',
-                                                            //     fit: BoxFit
-                                                            //         .cover,
-                                                            //   ),
-                                                            // ),
-                                                            const SizedBox(
-                                                              height: 30,
-                                                            ),
-                                                            buttonWidget(
-                                                                callback: () {
-                                                                  if (groupValue ==
-                                                                      -1) {
-                                                                    buildErrorDialog(
-                                                                        context,
-                                                                        '',
-                                                                        'Please click on wine type icon (by bottle or by glass)');
-                                                                  } else {
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                ItemDetailsScreen(wineId: item.id),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                },
-                                                                text:
-                                                                    "See more",
-                                                                radius: 100,
-                                                                color:
-                                                                    backGroundColor)
-                                                            // Text(
-                                                            //   groupValue ==
-                                                            //       0
-                                                            //       ? (item.pricePerBott
-                                                            //       .toString() +
-                                                            //       '£')
-                                                            //       : groupValue ==
-                                                            //       2
-                                                            //       ? (item.pricePeCocktail.toString() +
-                                                            //       '£')
-                                                            //       : '',
-                                                            //   maxLines: 3,
-                                                            //   textAlign:
-                                                            //   TextAlign
-                                                            //       .center,
-                                                            //   overflow:
-                                                            //   TextOverflow
-                                                            //       .ellipsis,
-                                                            //   style:
-                                                            //   const TextStyle(
-                                                            //     fontWeight:
-                                                            //     FontWeight
-                                                            //         .bold,
-                                                            //     fontSize:
-                                                            //     20,
-                                                            //   ),
-                                                            // ),
-                                                          ],
+                                                                              "assets/images/fa-solid_wine-glass.png",
+                                                                              width: 50,
+                                                                              height: 50,
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 15,
+                                                                            ),
+                                                                            Text(
+                                                                              "£${item.pricePerGlass}",
+                                                                              //     groupValue ==
+                                                                              // 0
+                                                                              // ? (item.pricePerGlass
+                                                                              // .toString() +
+                                                                              // '£')
+                                                                              // : groupValue ==
+                                                                              // 2
+                                                                              // ? (item.pricePeCocktail.toString() +
+                                                                              // '£')
+                                                                              // : '',
+                                                                              style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            const Text(
+                                                                              "per glass",
+                                                                              style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Image.asset(
+                                                                              "assets/images/mdi_bottle-wine.png",
+                                                                              width: 50,
+                                                                              height: 50,
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 15,
+                                                                            ),
+                                                                            Text(
+                                                                              // "£${wineList?.data?[sliderIndex].pricePerBott}",
+
+                                                                              '£${item.pricePerBott}',
+                                                                              //     groupValue ==
+                                                                              // 0
+                                                                              // ? (item.pricePerBott
+                                                                              // .toString() +
+                                                                              // '£')
+                                                                              // : groupValue ==
+                                                                              // 2
+                                                                              // ? (item.pricePeCocktail.toString() +
+                                                                              // '£')
+                                                                              // : '',
+                                                                              style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            const Text(
+                                                                              "per bottle",
+                                                                              style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    )
+                                                                  : Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceAround,
+                                                                      children: [
+                                                                        Image
+                                                                            .asset(
+                                                                          "assets/images/Vector.png",
+                                                                          width:
+                                                                              60,
+                                                                          height:
+                                                                              60,
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          height:
+                                                                              10,
+                                                                        ),
+                                                                        Text(
+                                                                          "£${item.pricePeCocktail}",
+                                                                          style: const TextStyle(
+                                                                              color: Colors.black,
+                                                                              fontSize: 18,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                              const SizedBox(
+                                                                height: 30,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child:
+                                                                    buttonWidget(
+                                                                        callback:
+                                                                            () {
+                                                                          Navigator
+                                                                              .push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                              builder: (context) => ItemDetailsScreen(wineId: item.id),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                        text:
+                                                                            "See more",
+                                                                        radius:
+                                                                            100,
+                                                                        color:
+                                                                            backGroundColor),
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         )
@@ -539,7 +505,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                     options: CarouselOptions(
                                       height: 45.h,
                                       viewportFraction: 1,
-
+                                      // aspectRatio: 16/11,
                                       // enlargeStrategy:
                                       //     CenterPageEnlargeStrategy.scale,
                                       onPageChanged: (index, reason) {
@@ -672,18 +638,6 @@ class _ItemScreenState extends State<ItemScreen> {
       isLoading: isLoading,
     );
   }
-
-  // Widget _myRadioButton(
-  //     {required String title,
-  //     required int value,
-  //     required Function(int?) onChanged}) {
-  //   return Radio(
-  //     groupValue: groupValue,
-  //     onChanged: onChanged,
-  //     value: value,
-  //     fillColor: MaterialStateProperty.all(Colors.blue),
-  //   );
-  // }
 
   getWineList() {
     checkInternet().then(

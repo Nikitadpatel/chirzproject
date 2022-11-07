@@ -78,22 +78,20 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
           ),
           actions: [
             Container(
-              child: (userData == null)
-                  ? Container()
-                  : IconButton(
-                      onPressed: () {
-                        addToFavourites();
-                      },
-                      icon: ((itemDetailModel?.data?.isFavourite ?? 1) == 1)
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.favorite_border_rounded,
-                              color: Colors.black,
-                            ),
-                    ),
+              child: IconButton(
+                onPressed: () {
+                  (userData == null) ? customeDialog() : addToFavourites();
+                },
+                icon: ((itemDetailModel?.data?.isFavourite ?? 1) == 1)
+                    ? const Icon(
+                        Icons.bookmark,
+                        color: Colors.red,
+                      )
+                    : const Icon(
+                        Icons.bookmark_border,
+                        color: Colors.black,
+                      ),
+              ),
             ),
             // GestureDetector(
             //   onTap: () {
@@ -165,7 +163,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                        left: 5.h, right: 5.h, top: 4.h),
+                                        left: 5.h, right: 5.h, top: 3.h),
                                     child: Text(
                                       itemDetailModel?.data?.aboutWine ?? '',
                                       overflow: descTextShowFlag
@@ -173,6 +171,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                           : TextOverflow.ellipsis,
                                       maxLines: descTextShowFlag ? 8 : 2,
                                       textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6),
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ),
@@ -203,7 +204,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 10.0,
+                                  height: 15.0,
                                 ),
                                 Container(
                                   // padding: EdgeInsets.only(bottom: 1.h),
@@ -221,44 +222,16 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              width: 80.0,
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                'Grape',
-                                                style: textstyle,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 20.0,
-                                            ),
-                                            Container(
-                                              width: 100.0,
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                itemDetailModel
-                                                        ?.data?.typeOfGrape ??
-                                                    '',
-                                                style: textstyle1,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
                                                 width: 80.0,
                                                 alignment:
                                                     Alignment.centerRight,
-                                                child: Text(
+                                                child: const Text(
                                                   'Type',
-                                                  style: textstyle,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 )),
                                             const SizedBox(
                                               width: 20.0,
@@ -272,8 +245,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                       '',
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                  style: textstyle1),
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
+                                                      fontSize: 13)),
                                             ),
                                           ],
                                         ),
@@ -290,9 +266,13 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 width: 100.0,
                                                 alignment:
                                                     Alignment.centerRight,
-                                                child: Text(
+                                                child: const Text(
                                                   'Region',
-                                                  style: textstyle,
+                                                  style:  TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 )),
                                             const SizedBox(
                                               width: 20.0,
@@ -304,10 +284,51 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                   itemDetailModel
                                                           ?.data?.region ??
                                                       '',
-                                                  style: textstyle1),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
+                                                      fontSize: 13)),
                                             ),
                                             const SizedBox(
                                               width: 20.0,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 80.0,
+                                              alignment: Alignment.centerRight,
+                                              child: const Text(
+                                                'Grape',
+                                                style:  TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 20.0,
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                  itemDetailModel
+                                                          ?.data?.typeOfGrape ??
+                                                      '',
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
+                                                      fontSize: 13)),
                                             ),
                                           ],
                                         ),
@@ -323,9 +344,13 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                             Container(
                                               width: 100.0,
                                               alignment: Alignment.centerRight,
-                                              child: Text(
+                                              child: const Text(
                                                 'Alcohol',
-                                                style: textstyle,
+                                                style:  TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                             const SizedBox(
@@ -339,7 +364,10 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                               ?.alcoholPercentage +
                                                           "%" ??
                                                       '',
-                                                  style: textstyle1),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
+                                                      fontSize: 13)),
                                             ),
                                             const SizedBox(
                                               width: 20.0,
@@ -359,9 +387,13 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 width: 100.0,
                                                 alignment:
                                                     Alignment.centerRight,
-                                                child: Text(
+                                                child: const Text(
                                                   'year',
-                                                  style: textstyle,
+                                                  style:  TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 )),
                                             const SizedBox(
                                               width: 20.0,
@@ -372,7 +404,10 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                               child: Text(
                                                   itemDetailModel?.data?.year ??
                                                       '',
-                                                  style: textstyle1),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
+                                                      fontSize: 13)),
                                             ),
                                             const SizedBox(
                                               width: 20.0,
@@ -382,7 +417,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                       ]),
                                 ),
                                 const SizedBox(
-                                  height: 10.0,
+                                  height: 30.0,
                                 ),
                               ],
                             ),
@@ -396,7 +431,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                   children: [
                                     const Text(
                                       "Sweetness",
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                           color: Colors.black,
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.bold),
@@ -417,7 +452,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 0.0, vertical: 1.5),
                                         width: 300.0,
-                                        height: 8.0,
+                                        height: 13.0,
                                         child: Row(
                                           children: [
                                             Container(
@@ -429,7 +464,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                               Radius.circular(
                                                                   50.0),
                                                           bottomLeft:
-                                                              const Radius
+                                                               Radius
                                                                       .circular(
                                                                   50.0))),
                                               width: 5.0,
@@ -456,7 +491,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                               Radius.circular(
                                                                   50.0),
                                                           bottomRight:
-                                                              const Radius
+                                                               Radius
                                                                       .circular(
                                                                   50.0))),
                                             ),
@@ -464,7 +499,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                         ),
                                       ),
                                       Container(
-                                          height: 8.0,
+                                          height: 13.0,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 0.0, vertical: 1.5),
                                           child: FlutterSlider(
@@ -499,20 +534,18 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 elevation: 1,
                                                 child: Container(
                                                   height: 50.0,
-                                                  width: 5.0,
+                                                  width: 3.0,
                                                   color: Colors.red.shade900,
                                                 ),
                                               ),
                                             ),
-                                            // rightHandler: FlutterSliderHandler(
-                                            //   child:  Container(height: 50.0,
-                                            //     width: 5.0,
-                                            //     color: Colors.black,),
-                                            // ),
-                                            // handlerHeight: 50.0,
+                                           
                                           )),
                                     ],
                                   ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
                                 ),
                                 Row(
                                   children: [
@@ -539,7 +572,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 0.0, vertical: 1.5),
                                         width: 300.0,
-                                        height: 8.0,
+                                        height: 13.0,
                                         child: Row(
                                           children: [
                                             Container(
@@ -573,7 +606,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                         ),
                                       ),
                                       Container(
-                                          height: 8.0,
+                                          height: 13.0,
                                           // color: Colors.black,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 0.0, vertical: 1.5),
@@ -590,7 +623,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 _lowerValue1 = lowerValue1;
                                               });
                                             },
-                                            handlerWidth: 30.0,
+                                            handlerWidth: 90.0,
                                             trackBar:
                                                 const FlutterSliderTrackBar(
                                               inactiveTrackBar: BoxDecoration(
@@ -610,7 +643,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                 elevation: 5,
                                                 child: Container(
                                                   height: 50.0,
-                                                  width: 5.0,
+                                                  width: 3.0,
                                                   color: Colors.red.shade900,
                                                 ),
                                               ),
@@ -629,7 +662,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                             ),
                           ),
                           const SizedBox(
-                            height: 20.0,
+                            height: 25.0,
                           ),
                           Container(
                               padding: EdgeInsets.symmetric(
@@ -649,23 +682,23 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                       children: [
                                         const Text(
                                           "Comments",
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                               color: Colors.black,
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Container(
-                                          child: IconButton(
-                                            onPressed: () {
-                                              (userData == null)
-                                                  ? customeDialog()
-                                                  : showRatingDialog();
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: Colors.red,
-                                            ),
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            height: 50,
+                                            width: 50,
+                                            child: Image.asset("assets/images/Vector (1).png"),
+                                          
                                           ),
+                                         onTap: () {
+                                                (userData == null)
+                                                    ? customeDialog()
+                                                    : showRatingDialog();
+                                              },
                                         ),
                                       ],
                                     ),
@@ -673,6 +706,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                             (ratingModel?.data?.isEmpty ??
                                                 true))
                                         ? Container(
+                                            height: 80,
                                             alignment: Alignment.center,
                                             child: const Text(
                                                 'No comments currently available'),
@@ -692,22 +726,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                   margin: EdgeInsets.symmetric(
                                                       vertical: 1.h),
                                                   padding: EdgeInsets.symmetric(
-                                                      vertical: 1.5.h,
+                                                      vertical: 1.h,
                                                       horizontal: 1.5.h),
-                                                  // decoration: BoxDecoration(
-                                                  //     boxShadow: [
-                                                  //       BoxShadow(
-                                                  //         color:
-                                                  //         Colors.grey.withOpacity(0.5),
-                                                  //         spreadRadius: 5,
-                                                  //         blurRadius: 7,
-                                                  //         offset: const Offset(0,
-                                                  //             3), // changes position of shadow
-                                                  //       ),
-                                                  //     ],
-                                                  //     color: Colors.white,
-                                                  //     borderRadius: const BorderRadius.all(
-                                                  //         Radius.circular(15))),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -725,19 +745,54 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                       //   margin: EdgeInsets.symmetric(
                                                       //       horizontal: 1.h),
                                                       // ),
-                                                      Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    1.h),
-                                                        child: Column(
-                                                          children: [
-                                                            Text(
-                                                                (ratingModel
+                                                      SizedBox(
+                                                        height: 100,
+                                                        width: 36.h,
+                                                        child: Card(
+                                                          elevation: 1,
+                                                          margin: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      1.h),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Text(
+                                                                  (ratingModel
+                                                                          ?.data?[
+                                                                              index]
+                                                                          .comment ??
+                                                                      ''),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.5),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic)),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Text(
+                                                                ratingModel
                                                                         ?.data?[
                                                                             index]
-                                                                        .comment ??
-                                                                    ''),
+                                                                        .username ??
+                                                                    '',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
                                                                 style: const TextStyle(
                                                                     color: Colors
                                                                         .black,
@@ -745,68 +800,43 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                                                         FontWeight
                                                                             .w500,
                                                                     fontSize:
-                                                                        14,
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .italic)),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            RatingBar.builder(
-                                                              itemSize: 20,
-                                                              initialRating: double
-                                                                  .parse(ratingModel
-                                                                          ?.data?[
-                                                                              index]
-                                                                          .rate ??
-                                                                      '1'),
-                                                              minRating: 1,
-                                                              direction: Axis
-                                                                  .horizontal,
-                                                              allowHalfRating:
-                                                                  true,
-                                                              ignoreGestures:
-                                                                  true,
-                                                              itemCount: 5,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                          _) =>
-                                                                      const Icon(
-                                                                Icons.star,
-                                                                color: Colors
-                                                                    .amber,
+                                                                        16),
                                                               ),
-                                                              onRatingUpdate:
-                                                                  (ratings) {
-                                                                rating = ratings
-                                                                    .toString();
-                                                                print(rating);
-                                                              },
-                                                            ),
-                                                            Text(
-                                                              ratingModel
-                                                                      ?.data?[
-                                                                          index]
-                                                                      .username ??
-                                                                  '',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: const TextStyle(
+                                                              const SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              RatingBar.builder(
+                                                                itemSize: 20,
+                                                                initialRating: double.parse(ratingModel
+                                                                        ?.data?[
+                                                                            index]
+                                                                        .rate ??
+                                                                    '1'),
+                                                                minRating: 1,
+                                                                direction: Axis
+                                                                    .horizontal,
+                                                                allowHalfRating:
+                                                                    true,
+                                                                ignoreGestures:
+                                                                    true,
+                                                                itemCount: 5,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                            _) =>
+                                                                        const Icon(
+                                                                  Icons.star,
                                                                   color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                            ),
-                                                          ],
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
+                                                                      .amber,
+                                                                ),
+                                                                onRatingUpdate:
+                                                                    (ratings) {
+                                                                  rating = ratings
+                                                                      .toString();
+                                                                  print(rating);
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       )
                                                     ],
@@ -1305,7 +1335,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
           setState(() {
             isLoading = false;
           });
-          print(onError.toString());
+
           buildErrorDialog(context, 'Error', 'Something went wrong');
         });
       } else {

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:chirz/Model/user_model.dart';
 import 'package:chirz/providers/auth-providers.dart';
 import 'package:chirz/screens/registration.dart';
-import 'package:chirz/screens/splash-screen.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/shared-preference.dart';
 import 'package:chirz/utils/widgets.dart';

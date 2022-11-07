@@ -41,7 +41,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         drawer: drawerWidgets(context),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading:             GestureDetector(
+          leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
@@ -53,7 +53,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               ),
             ),
           ),
-
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
@@ -94,149 +93,176 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               //         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
               //   ),
               // ),
-              isLoading == true ?
-              Container():
-              Expanded(
-                child: (restaurants == null
-                    ? 0
-                    : restaurants?.data?.length ?? 0) ==
-                    0
-                    ? SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(child: Text('No Favourites yet ',
-
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,fontSize: 16.0),)),
-                      const SizedBox(height: 10.0,),
-                      const Center(child: Text(
-
-                        'Tap the star icon near any restaurent and \n  we will save it here for you'
-                        ,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12.0,color: Colors.grey),)),
-                      const SizedBox(height: 10.0,),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder:  (context)=>const RestaurantsScreen()));
-                        },
-                        child: Container(
-
-                            height: 40.0,
-                            width: 150.0,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(20.0),
-                                color:const Color(0xFFB41712)
-                            ),
-                            child:const Center(child: Text("Explore",style: TextStyle(color: Colors.white),))
-                        ),
-                      )
-                    ],
-                  ),
-                )
-                    : Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2.h),
-                  child: ListView.builder(
-                    itemCount: restaurants == null
-                        ? 0
-                        : restaurants?.data?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      return Container(
-
-                        margin: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-                        padding: const EdgeInsets.only(top: 10.0,bottom: 10.0),
-                        height: 70.0,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.sp),
-                          ),
-                          color:Colors.grey.shade200,
-                        ),
-
-                        // margin: EdgeInsets.only(right: 1.h, bottom: 1.h),
-                        child: GestureDetector(
-                          onTap: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ItemDetailsScreen(
-                                    wineId:
-                                    restaurants?.data?[index].itemId,
+              isLoading == true
+                  ? Container()
+                  : Expanded(
+                      child: (restaurants == null
+                                  ? 0
+                                  : restaurants?.data?.length ?? 0) ==
+                              0
+                          ? SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text(
+                                    'No Favourites yet ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  )),
+                                  const SizedBox(
+                                    height: 10.0,
                                   ),
-                                ));
-                            getFavouritesWines();
-                          },
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height:50.0,
-                                width: 50.0,
-                                // height: 18.h,
-                                // width: 17.h,
-                                child: CachedNetworkImage(
-                                  imageUrl: restaurants
-                                      ?.data?[index].itemImage ??
-                                      '',
-                                  imageBuilder:
-                                      (context, imageProvider) =>
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          // borderRadius: BorderRadius.all(
-                                          //   Radius.circular(10.sp),
-                                          // ),
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                  placeholder: (context, url) =>
                                   const Center(
-                                      child:
-                                      CircularProgressIndicator()),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                        color: Colors.grey,
-                                        child: Image.asset(
-                                            Res.profile_pic_placeholder),
+                                      child: Text(
+                                    'Tap the star icon near any restaurent and \n  we will save it here for you',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0,
+                                        color: Colors.grey),
+                                  )),
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RestaurantsScreen()));
+                                    },
+                                    child: Container(
+                                        height: 40.0,
+                                        width: 150.0,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(20.0),
+                                            color: const Color(0xFFB41712)),
+                                        child: const Center(
+                                            child: Text(
+                                          "Explore",
+                                          style: TextStyle(color: Colors.white),
+                                        ))),
+                                  )
+                                ],
+                              ),
+                            )
+                          : Container(
+                              margin: EdgeInsets.symmetric(horizontal: 2.h),
+                              child: ListView.builder(
+                                itemCount: restaurants == null
+                                    ? 0
+                                    : restaurants?.data?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 10.0, bottom: 10.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, bottom: 10.0),
+                                    height: 70.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.sp),
                                       ),
-                                ),
+                                      color: Colors.grey.shade200,
+                                    ),
+
+                                    // margin: EdgeInsets.only(right: 1.h, bottom: 1.h),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ItemDetailsScreen(
+                                                wineId: restaurants
+                                                    ?.data?[index].itemId,
+                                              ),
+                                            ));
+                                        getFavouritesWines();
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                            height: 50.0,
+                                            width: 50.0,
+                                            // height: 18.h,
+                                            // width: 17.h,
+                                            child: CachedNetworkImage(
+                                              imageUrl: restaurants
+                                                      ?.data?[index]
+                                                      .itemImage ??
+                                                  '',
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  // borderRadius: BorderRadius.all(
+                                                  //   Radius.circular(10.sp),
+                                                  // ),
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Container(
+                                                color: Colors.grey,
+                                                child: Image.asset(Res
+                                                    .profile_pic_placeholder),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 200,
+                                            height: 70,
+                                            child: Text(
+                                              restaurants
+                                                      ?.data?[index].itemName ??
+                                                  '',
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12.0),
+                                              // textAlign: TextAlign.center,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                            ),
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.only(right: 5),
+                                            child: Icon(
+                                              Icons.favorite_outlined,
+                                              color: Colors.red,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                // gridDelegate:
+                                //     const SliverGridDelegateWithFixedCrossAxisCount(
+                                //         crossAxisCount: 2),
                               ),
-                              SizedBox(
-                                width: 200,
-                                height: 70,
-                                child: Text(
-                                  restaurants?.data?[index].itemName ??
-                                      '',
-                                  style: const TextStyle(color: Colors.black,fontSize: 12.0),
-                                  // textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 5),
-                                child:  Icon(Icons.favorite_outlined,color: Colors.red,),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    // gridDelegate:
-                    //     const SliverGridDelegateWithFixedCrossAxisCount(
-                    //         crossAxisCount: 2),
-                  ),
-                ),
-              ),
+                            ),
+                    ),
             ],
           ),
         ),
@@ -257,7 +283,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
           'action': 'favourite_list'
         }).then((Response response) async {
           FavouriteListModel restaurantData =
-          FavouriteListModel.fromJson(json.decode(response.body));
+              FavouriteListModel.fromJson(json.decode(response.body));
 
           if (response.statusCode == 200 && restaurantData.status == 1) {
             restaurants = restaurantData;

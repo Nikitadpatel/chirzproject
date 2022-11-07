@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chirz/Model/base_model.dart';
 import 'package:chirz/Model/cart_list_model.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
-
 import '../res.dart';
 import 'card_details_screen.dart';
 import 'item-details-screen.dart';

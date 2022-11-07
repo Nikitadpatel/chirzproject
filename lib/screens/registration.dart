@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:chirz/Model/user_model.dart';
 import 'package:chirz/providers/auth-providers.dart';
 import 'package:chirz/utils/const.dart';
@@ -78,8 +77,8 @@ class _RegistrationState extends State<Registration> {
                       child: LinearProgressIndicator(
                         value: 0.2.w,
                         minHeight: 7.h,
-                        valueColor:
-                        const AlwaysStoppedAnimation<Color>(backGroundColor),
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                            backGroundColor),
                         backgroundColor: Colors.grey.withOpacity(0.4),
                       ),
                     ),
@@ -92,40 +91,7 @@ class _RegistrationState extends State<Registration> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Text(
-                            //   'Register Now',
-                            //   style: TextStyle(
-                            //     color: Colors.white,
-                            //     fontSize: 5.0.h,
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   height: 4.0.h,
-                            // ),
-                            /*     GestureDetector(
-                              onTap: () => _showSelectionDialog(context),
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                height: 80.0,
-                                decoration: const BoxDecoration(
-                                  color: Colors.black,
-                                  shape: BoxShape.circle,
-                                ),
-                                alignment: Alignment.center,
-                                child: _pickedFile != null
-                                    ? Image.file(_pickedFile!)
-                                    : userData == null ||
-                                            (userData?.data?.image?.isEmpty ??
-                                                false)
-                                        ? Image.asset(
-                                            Res.profile_pic_placeholder)
-                                        : Image.network(
-                                            userData?.data?.image ?? ''),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 4.0.h,
-                            ),*/
+                           
                             Text(
                               "A little bit about you.",
                               style: TextStyle(
@@ -178,146 +144,13 @@ class _RegistrationState extends State<Registration> {
                                 }
                               },
                               decoration:
-                              inputDecoration(hintText: 'Email Address'),
+                                  inputDecoration(hintText: 'Email Address'),
                             ),
 
-                            // TextFormField(
-                            //   controller: password,
-                            //   style: textStyle,
-                            //   obscureText: true,
-                            //   validator: (value) {
-                            //     if (value!.isEmpty) {
-                            //       return 'Please enter Password';
-                            //     }
-                            //     return null;
-                            //   },
-                            //   decoration: inputDecoration(
-                            //     prefixIcon: Icons.lock_outline_rounded,
-                            //     hintText: 'Password',
-                            //   ),
-                            // ),
-
-                            // TextFormField(
-                            //   controller: confirmPassword,
-                            //   obscureText: true,
-                            //   style: textStyle,
-                            //   validator: (value) {
-                            //     if (value!.isEmpty) {
-                            //       return 'Please enter Password';
-                            //     }
-                            //     return null;
-                            //   },
-                            //   decoration: inputDecoration(
-                            //     prefixIcon: Icons.lock_outline_rounded,
-                            //     hintText: 'Confirm Password',
-                            //   ),
-                            // ),
                             SizedBox(
                               height: 2.h,
                             ),
-                            // TextFormField(
-                            //   controller: phoneNumber,
-                            //   style: textStyle,
-                            //   validator: (value) {
-                            //     if (value!.isEmpty) {
-                            //       return 'Please enter phoneNumber';
-                            //     }
-                            //     if (value.length < 10) {
-                            //       return 'Please enter Valid phoneNumber';
-                            //     }
-                            //     return null;
-                            //   },
-                            //   decoration: inputDecoration(
-                            //     prefixIcon: Icons.phone_android_sharp,
-                            //     hintText: 'Phone Number',
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   height: 2.h,
-                            // ),
-
-                            // SizedBox(
-                            //   height: 2.h,
-                            // ),
-                            /* TextFormField(
-                              controller: profileDescription,
-                              style: textStyle,
-                              decoration: inputDecoration(
-                                prefixIcon: Icons.person,
-                                hintText: 'Profile Description',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            TextFormField(
-                              controller: city,
-                              style: textStyle,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter City';
-                                }
-                                return null;
-                              },
-                              decoration: inputDecoration(
-                                prefixIcon: Icons.location_city,
-                                hintText: 'City',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            TextFormField(
-                              controller: zipcode,
-                              style: textStyle,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter ZipCode';
-                                }
-                                return null;
-                              },
-                              decoration: inputDecoration(
-                                prefixIcon: Icons.code,
-                                hintText: 'ZipCode',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            TextFormField(
-                              controller: state,
-                              style: textStyle,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter state';
-                                }
-                                return null;
-                              },
-                              decoration: inputDecoration(
-                                prefixIcon: Icons.real_estate_agent,
-                                hintText: 'State',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            TextFormField(
-                              controller: country,
-                              style: textStyle,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter Country';
-                                }
-                                return null;
-                              },
-                              decoration: inputDecoration(
-                                prefixIcon: Icons.lock_outline_rounded,
-                                hintText: 'Country',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),*/
+                            
                           ],
                         ),
                       ),
@@ -352,29 +185,7 @@ class _RegistrationState extends State<Registration> {
                           SizedBox(
                             height: 2.0.h,
                           ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Text(
-                          //       'Already have an account  ',
-                          //       style: TextStyle(
-                          //         color: Colors.white,
-                          //         fontSize: 11.sp,
-                          //       ),
-                          //     ),
-                          //     GestureDetector(
-                          //       onTap: () => Navigator.pop(context),
-                          //       child: Text(
-                          //         'Login here !',
-                          //         style: TextStyle(
-                          //           color: Colors.white,
-                          //           fontSize: 12.sp,
-                          //           fontWeight: FontWeight.bold,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
+                         
                         ],
                       ),
                     ),
@@ -416,7 +227,7 @@ class _RegistrationState extends State<Registration> {
         elevation: 0.0,
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 20.r),
+        padding: EdgeInsets.symmetric(horizontal: 20.r),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -429,7 +240,7 @@ class _RegistrationState extends State<Registration> {
                     value: 0.4.w,
                     minHeight: 7.h,
                     valueColor:
-                    const AlwaysStoppedAnimation<Color>(backGroundColor),
+                        const AlwaysStoppedAnimation<Color>(backGroundColor),
                     backgroundColor: Colors.grey.withOpacity(0.4),
                   ),
                 ),
@@ -472,10 +283,10 @@ class _RegistrationState extends State<Registration> {
                     if (phoneNumber.text.isNotEmpty) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => RegistrationThird(
-                            username: userName,
-                            email: userEmail,
-                            phoneNum: phoneNumber.text,
-                          )));
+                                username: userName,
+                                email: userEmail,
+                                phoneNum: phoneNumber.text,
+                              )));
                     }
                   },
                   text: 'Continue',
@@ -492,186 +303,188 @@ class _RegistrationState extends State<Registration> {
 
   Widget RegistrationThird(
       {required String username,
-        required String email,
-        required String phoneNum}) {
-    return
-      Scaffold(
-        backgroundColor: whiteColor,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Register ',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22.sp,
-            ),
+      required String email,
+      required String phoneNum}) {
+    return Scaffold(
+      backgroundColor: whiteColor,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Register ',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 22.sp,
           ),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
         ),
-        body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.r),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 20.r),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                    child: LinearProgressIndicator(
-                      value: 0.7.w,
-                      minHeight: 7.h,
-                      valueColor:
-                      const AlwaysStoppedAnimation<Color>(backGroundColor),
-                      backgroundColor: Colors.grey.withOpacity(0.4),
-                    ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.r),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20.r),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(30.r)),
+                  child: LinearProgressIndicator(
+                    value: 0.7.w,
+                    minHeight: 7.h,
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(backGroundColor),
+                    backgroundColor: Colors.grey.withOpacity(0.4),
                   ),
                 ),
-                Text("Add a password",style: TextStyle(color: primaryBlack,fontWeight: FontWeight.bold,fontSize: 17.sp),),
-                Expanded(
-                  flex: 3,
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: _formKeyTwo,
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          TextFormField(
-                            controller: password,
-                            style: textStyle,
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter Password';
-                              }
-                              return null;
-                            },
-                            decoration: inputDecoration(
-                              hintText: 'Password',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          TextFormField(
-                            controller: confirmPassword,
-                            obscureText: true,
-                            style: textStyle,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter Password';
-                              }
-                              return null;
-                            },
-                            decoration: inputDecoration(
-                              hintText: 'Confirm Password',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    Text(
-                      'By continuing, you agree to our ',
-                      style: TextStyle(
-                        color: primaryBlack,
-                        fontSize: 13.sp,
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Terms of Service',
-                        style: TextStyle(
-                            color: backGroundColor,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      onTap: () async {
-                        launchURL('https://www.chirz.co.uk/termsofuse');
-                      },
-                    ),
-                  ],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    Text(
-                      'and ',
-                      style: TextStyle(
-                        color: primaryBlack,
-                        fontSize: 13.sp,
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Privacy Policy',
-                        style: TextStyle(
-                            color: backGroundColor,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600
-                        ),
-                      ),
-                      onTap: () async {
-                        launchURL('https://www.chirz.co.uk/privacy-policy');
-                      },
-                    ),
-                  ],),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Expanded(
-                  flex: 3,
-                  child: SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
+              ),
+              Text(
+                "Add a password",
+                style: TextStyle(
+                    color: primaryBlack,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.sp),
+              ),
+              Expanded(
+                flex: 3,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKeyTwo,
                     child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: buttonWidget(
-                            radius: 30.r,
-                            color: backGroundColor,
-                            callback: ()async  {
-                              FocusScope.of(context).unfocus();
-                              // loginApi();
-                              if (_formKeyTwo.currentState!.validate()) {
-                                registrationApi();
-                              }
-                            },
-                            text: 'Register',
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        TextFormField(
+                          controller: password,
+                          style: textStyle,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Password';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration(
+                            hintText: 'Password',
                           ),
                         ),
                         SizedBox(
-                          height: 5.h,
+                          height: 24.h,
+                        ),
+                        TextFormField(
+                          controller: confirmPassword,
+                          obscureText: true,
+                          style: textStyle,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Password';
+                            }
+                            return null;
+                          },
+                          decoration: inputDecoration(
+                            hintText: 'Confirm Password',
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'By continuing, you agree to our ',
+                    style: TextStyle(
+                      color: primaryBlack,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Text(
+                      'Terms of Service',
+                      style: TextStyle(
+                          color: backGroundColor,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    onTap: () async {
+                      launchURL('https://www.chirz.co.uk/termsofuse');
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'and ',
+                    style: TextStyle(
+                      color: primaryBlack,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Text(
+                      'Privacy Policy',
+                      style: TextStyle(
+                          color: backGroundColor,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    onTap: () async {
+                      launchURL('https://www.chirz.co.uk/privacy-policy');
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Expanded(
+                flex: 3,
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Container(
+                        child: buttonWidget(
+                          radius: 30.r,
+                          color: backGroundColor,
+                          callback: () async {
+                            FocusScope.of(context).unfocus();
+                            // loginApi();
+                            if (_formKeyTwo.currentState!.validate()) {
+                              registrationApi();
+                            }
+                          },
+                          text: 'Register',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-
-      );
+      ),
+    );
   }
 
   //functions for this screen
@@ -682,55 +495,55 @@ class _RegistrationState extends State<Registration> {
       builder: (BuildContext context) {
         return Platform.isAndroid
             ? AlertDialog(
-          title: const Text("From where do you want to take the photo?"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                const Padding(padding:  EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: const Text("Gallery"),
-                  onTap: () {
-                    Navigator.of(context).pop(false);
-                    getImageByGallary();
-                  },
+                title: const Text("From where do you want to take the photo?"),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      const Padding(padding: EdgeInsets.all(8.0)),
+                      GestureDetector(
+                        child: const Text("Gallery"),
+                        onTap: () {
+                          Navigator.of(context).pop(false);
+                          getImageByGallary();
+                        },
+                      ),
+                      const Padding(padding: EdgeInsets.all(8.0)),
+                      GestureDetector(
+                        child: const Text("Camera"),
+                        onTap: () {
+                          Navigator.of(context).pop(false);
+                          getImage();
+                        },
+                      )
+                    ],
+                  ),
                 ),
-                const Padding(padding: EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: const Text("Camera"),
-                  onTap: () {
-                    Navigator.of(context).pop(false);
-                    getImage();
-                  },
-                )
-              ],
-            ),
-          ),
-        )
+              )
             : CupertinoAlertDialog(
-          title: const Text("From where do you want to take the photo?"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                const Padding(padding: EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: const Text("Gallery"),
-                  onTap: () {
-                    Navigator.of(context).pop(false);
-                    getImageByGallary();
-                  },
+                title: const Text("From where do you want to take the photo?"),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      const Padding(padding: EdgeInsets.all(8.0)),
+                      GestureDetector(
+                        child: const Text("Gallery"),
+                        onTap: () {
+                          Navigator.of(context).pop(false);
+                          getImageByGallary();
+                        },
+                      ),
+                      const Padding(padding: EdgeInsets.all(8.0)),
+                      GestureDetector(
+                        child: const Text("Camera"),
+                        onTap: () {
+                          Navigator.of(context).pop(false);
+                          getImage();
+                        },
+                      )
+                    ],
+                  ),
                 ),
-                const Padding(padding: EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: const Text("Camera"),
-                  onTap: () {
-                    Navigator.of(context).pop(false);
-                    getImage();
-                  },
-                )
-              ],
-            ),
-          ),
-        );
+              );
       },
     );
   }
@@ -773,11 +586,11 @@ class _RegistrationState extends State<Registration> {
         aspectRatio: const CropAspectRatio(ratioX: 20, ratioY: 20),
         aspectRatioPresets: Platform.isAndroid
             ? [
-          CropAspectRatioPreset.square,
-        ]
+                CropAspectRatioPreset.square,
+              ]
             : [
-          CropAspectRatioPreset.square,
-        ],
+                CropAspectRatioPreset.square,
+              ],
         androidUiSettings: const AndroidUiSettings(
             toolbarTitle: 'Image Crop',
             toolbarWidgetColor: Colors.white,
@@ -809,13 +622,13 @@ class _RegistrationState extends State<Registration> {
       hintStyle: textStyle,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.sp)),
-        borderSide:const BorderSide(
+        borderSide: const BorderSide(
           color: Colors.black,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.sp)),
-        borderSide:const BorderSide(
+        borderSide: const BorderSide(
           color: Colors.black,
         ),
       ),
@@ -863,7 +676,7 @@ class _RegistrationState extends State<Registration> {
                     MaterialPageRoute(
                       builder: (context) => const RestaurantsScreen(),
                     ),
-                        (route) => false);
+                    (route) => false);
               } else {
                 setState(() {
                   isLoading = false;

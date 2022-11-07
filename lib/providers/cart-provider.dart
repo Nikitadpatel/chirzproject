@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:chirz/Model/user_model.dart';
-import 'package:chirz/utils/CustomException.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/response.dart';
 import 'package:http/http.dart' as https;

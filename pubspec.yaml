@@ -111,7 +111,15 @@ flutter:
     - assets/images/wine2.jpeg
     - assets/images/wine3.jpeg
     - assets/images/Launch Screen.png
-    - assets\images\preset_food.jpg
+    - assets/images/fa-solid_wine-glass.png
+    - assets/images/mdi_bottle-wine.png
+    - assets/images/Vector.png
+    - assets/images/Right Actionable.png
+    - assets/images/Vector (1).png
+    - assets/images/Vector (2).png
+    - assets/images/preset_food.jpg
+    - assets/images/Rectangle 51.png
+    - assets/images/Vector (3).png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

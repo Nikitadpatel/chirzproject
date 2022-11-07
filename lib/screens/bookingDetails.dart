@@ -85,7 +85,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                       : orderBookingModel?.data?.length ?? 0) ==
                   0
               ? const SizedBox(
-                  child: Center(child:  Text('Orders Not Found')),
+                  child: Center(child: Text('Orders Not Found')),
                 )
               : ListView.builder(
                   itemCount: orderBookingModel == null
@@ -115,8 +115,8 @@ class _BookingDetailsState extends State<BookingDetails> {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    const Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                             color: Colors.white,
@@ -270,7 +270,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                                       margin: const EdgeInsets.only(top: 10),
                                       decoration: const BoxDecoration(
                                           border: Border(
-                                              top:  BorderSide(
+                                              top: BorderSide(
                                                   color: Colors.grey))),
                                       child: Container(
                                         margin: const EdgeInsets.only(top: 10),

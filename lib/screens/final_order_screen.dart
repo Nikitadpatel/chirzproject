@@ -1,4 +1,3 @@
-
 import 'package:chirz/res.dart';
 import 'package:chirz/screens/explore.dart';
 import 'package:chirz/screens/restaurant.dart';
@@ -72,7 +71,7 @@ class _OrderSuccessFullyScreenState extends State<OrderSuccessFullyScreen> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>const ExplorerScreen(),
+                            builder: (context) => const ExplorerScreen(),
                             fullscreenDialog: true,
                           ),
                           (route) => false);
@@ -92,7 +91,7 @@ class _OrderSuccessFullyScreenState extends State<OrderSuccessFullyScreen> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) =>const RestaurantsScreen(),
+          builder: (context) => const RestaurantsScreen(),
           fullscreenDialog: true,
         ),
         (route) => false);

@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chirz/Model/order_booking_model.dart';
 import 'package:chirz/Model/order_details_model.dart';
 import 'package:chirz/providers/order_provider.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +57,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             )
           ],
           automaticallyImplyLeading: false,
-          leading:             GestureDetector(
+          leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
@@ -71,7 +69,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               ),
             ),
           ),
-
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0.0,

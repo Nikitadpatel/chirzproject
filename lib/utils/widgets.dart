@@ -29,36 +29,34 @@ Widget buttonWidget(
       Color? textColor,
       double? radius,
       Color color = Colors.black}) {
-  return Container(
-    child: TextButton(
-      style: ButtonStyle(
-        alignment: Alignment.center,
-        backgroundColor: MaterialStateProperty.all(color),
-        padding: MaterialStateProperty.all(
-          EdgeInsets.symmetric(vertical: 2.5.h),
-        ),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius ?? 12.sp),
-            )),
+  return TextButton(
+    style: ButtonStyle(
+      alignment: Alignment.center,
+      backgroundColor: MaterialStateProperty.all(color),
+      padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(vertical: 2.h),
       ),
-      onPressed: () => callback(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              color:textColor ?? Colors.white,
-              fontSize: 14.sp,
-            ),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius ?? 12.sp),
+          )),
+    ),
+    onPressed: () => callback(),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          text,
+          style: TextStyle(
+            color:textColor ?? Colors.white,
+            fontSize: 14.sp,
           ),
-          // const Icon(
-          //   Icons.navigate_next,
-          //   color: Colors.white,
-          // )
-        ],
-      ),
+        ),
+        // const Icon(
+        //   Icons.navigate_next,
+        //   color: Colors.white,
+        // )
+      ],
     ),
   );
 }

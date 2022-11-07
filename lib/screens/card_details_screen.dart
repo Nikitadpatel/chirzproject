@@ -535,7 +535,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
       setState(() {
         isLoading = false;
       });
-      print(onError.toString());
+     
       buildErrorDialog(context, 'Error', 'Something went wrong');
     });
   }

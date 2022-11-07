@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:chirz/Model/user_model.dart';
 import 'package:chirz/providers/auth-providers.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
@@ -41,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         drawer: drawerWidgets(context),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading:             GestureDetector(
+          leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
@@ -53,7 +51,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0.0,

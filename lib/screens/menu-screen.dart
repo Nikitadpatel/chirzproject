@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chirz/Model/NewWinePairModel.dart';
-import 'package:chirz/main.dart';
 import 'package:chirz/providers/food_providers.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
-import '../res.dart';
 import 'cartScreen.dart';
 import 'item-details-screen.dart';
 import 'items-screeen.dart';
@@ -215,9 +213,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 10),
                         ],
                       ),
                     ),
@@ -256,318 +252,181 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
     log(search.length.toString());
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: (data.food?.length) ?? 0,
+      itemCount: data.food?.length ?? 0,
       itemBuilder: (context, index1) {
-        log(data.food![index].itemImage.toString());
         return InkWell(
           onTap: () {
-            if (index == ((foodItems?.data?.length ?? 0) - 2)) {
-              if (groupValue == -1) {
-                buildErrorDialog(context, '',
-                    'Please click on wine type icon (by bottle or by glass)');
-              }
-            } else if (index == ((foodItems?.data?.length ?? 0) - 1)) {
+            if (data.menuName!.toLowerCase().contains('wine') ||
+                data.menuName!.toLowerCase().contains('cocktail')) {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ItemDetailsScreen(
-                      wineId: foodItems?.data?[index].food?[index1].id,
-                    ),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ItemDetailsScreen(wineId: data.food?[index1].id),
+                ),
+              );
             } else {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ItemScreen(
-                      foodId: data.food?[index1].pairId,
-                      isWineList: true,
-                      menuName: data.food?[index1].foodName,
-                      foodImage: data.food?[index1].image,
-                      discription: data.food?[index1].description,
-                      priceBottle: data.food?[index1].pricePerBott,
-                      priceGlass: data.food?[index1].pricePerGlass,
-                      foodPrice: data.food?[index1].price,
-                    ),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ItemScreen(
+                    foodId: data.food?[index1].pairId,
+                    isWineList: true,
+                    menuName: data.food?[index1].foodName,
+                    foodImage: data.food?[index1].image,
+                    discription: data.food?[index1].description,
+                    priceBottle: data.food?[index1].pricePerBott,
+                    priceGlass: data.food?[index1].pricePerGlass,
+                    foodPrice: data.food?[index1].price,
+                  ),
+                ),
+              );
             }
           },
-          child: index == ((foodItems?.data?.length ?? 0) - 2)
-              ? Container(
+          child: data.menuName.toString().toLowerCase().contains("wine") ||
+                  data.menuName.toString().toLowerCase().contains("cocktail")
+              ?
+              // wine & cocktail design
+              Container(
                   height: 13.h,
                   margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.h),
-                  // decoration: const BoxDecoration(
-                  //   color: Colors.white,
-                  //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //       color: Colors.grey,
-                  //       blurRadius: 2.0,
-                  //     ),
-                  //   ],
-                  // ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          padding: EdgeInsets.all(2.h),
-                          height: double.infinity,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10)),
-                            color: Color(0xFFB41712),
-                          ),
-                          child: Image.asset(
-                            Res.bottle,
-                          ),
-                        ),
-                      ),
                       Expanded(
                           flex: 5,
                           child: Container(
                             margin: EdgeInsets.only(left: 1.5.h),
                             padding: EdgeInsets.symmetric(vertical: 2.h),
                             alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data.food?[index1].foodName ?? '',
-                                  textAlign: TextAlign.start,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15.sp,
-                                    fontFamily: fontFamily,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        setState(() => groupValue = 0);
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ItemDetailsScreen(
-                                                      wineId: data
-                                                          .food?[index1].id),
-                                            ));
-                                        groupValue = -1;
-                                        setState(() {});
-                                      },
-                                      child: SizedBox(
-                                        child: Image.asset(
-                                          Res.glass,
-                                          width: 25,
-                                          height: 25,
-                                          color: groupValue != 0
-                                              ? null
-                                              : Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 25,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        setState(() => groupValue = 1);
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ItemDetailsScreen(
-                                                wineId:
-                                                    data.food?[index1].id ?? '',
-                                              ),
-                                            ));
-                                        groupValue = -1;
-                                        setState(() {});
-                                      },
-                                      child: SizedBox(
-                                        child: Image.asset(
-                                          Res.bottle,
-                                          width: 25,
-                                          height: 25,
-                                          color: groupValue != 1
-                                              ? null
-                                              : Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                )
-              : index == ((data.food?.length ?? 0) - 1)
-                  ? Container(
-                      height: 12.h,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.h),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 2.0,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              clipBehavior: Clip.hardEdge,
-                              padding: EdgeInsets.all(2.h),
-                              height: double.infinity,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10)),
-                                color: Color(0xFFB41712),
-                              ),
-                              child: Image.asset(
-                                Res.cocktail,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 1.5.h),
-                              padding: EdgeInsets.symmetric(vertical: 2.h),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                data.food?[index1].foodName ?? '',
-                                maxLines: 1,
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15.sp,
-                                  fontFamily: fontFamily,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : 
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 12.h,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.h),
-                      // decoration: const BoxDecoration(
-                      //   color: Colors.white,
-                      //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                      //   boxShadow: [
-                      //     BoxShadow(
-                      //       color: Colors.grey,
-                      //       blurRadius: 2.0,
-                      //     ),
-                      //   ],
-                      // ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Container(
+                            child: SizedBox(
                               width: 200,
-                              clipBehavior: Clip.hardEdge,
-
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              // child: Image.network(
-                              //   data.food?[index1].image ?? 'https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg',
-
-                              //   fit: BoxFit.cover,
-                              // ),
-                              child: CachedNetworkImage(
-                                imageUrl: data.food?[index1].image ?? '' ,
-                                placeholder: (context, url) =>
-                                    Center(child: Center(child: CircularProgressIndicator())),
-                                errorWidget: (context, url, error) =>
-                                    Image.network('https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg'),
-                                    fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              alignment: Alignment.centerLeft,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
                                     data.food?[index1].foodName ?? '',
                                     textAlign: TextAlign.start,
                                     maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15.sp,
                                       fontFamily: fontFamily,
                                     ),
                                   ),
-                                  
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                   Text(
-                                    
                                     data.food?[index1].description ??
-                                        "no description",
-
-                                    
+                                        'No description',
                                     textAlign: TextAlign.start,
-                                    maxLines: 2,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12.sp,
-                                        fontFamily: fontFamily,
-                                        overflow: TextOverflow.ellipsis),
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 13.sp,
+                                      fontFamily: fontFamily,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '£${data.food?[index1].price}',
-                              style:
-                                  const TextStyle(color: Colors.black, fontSize: 19),
-                            ),
-                          )
-                        ],
+                          )),
+                      Text(
+                        "£ ${data.food?[index1].pricePerGlass} / ${data.food?[index1].pricePerBott}",
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13.sp,
+                          fontFamily: fontFamily,
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                )
+              :
+              // food design
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 12.h,
+                  margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.h),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          width: 200,
+                          clipBehavior: Clip.hardEdge,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(image: AssetImage("assets/images/Rectangle 51.png"),fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.withOpacity(0.7)
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: data.food?[index1].image ?? '',
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Image.asset(
+                                'assets/images/Vector (2).png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.food?[index1].foodName ?? '',
+                                textAlign: TextAlign.start,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.sp,
+                                  fontFamily: fontFamily,
+                                ),
+                              ),
+                              Text(
+                                data.food?[index1].description ??
+                                    "no description",
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 12.sp,
+                                    fontFamily: fontFamily,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '£${data.food?[index1].price}',
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 19),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
         );
       },
     );

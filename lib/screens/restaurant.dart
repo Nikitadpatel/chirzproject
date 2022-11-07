@@ -1,23 +1,17 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chirz/Model/locations_list_model.dart';
 import 'package:chirz/Model/restaurant_data.dart';
 import 'package:chirz/providers/restaurent-provider.dart';
 import 'package:chirz/res.dart';
-import 'package:chirz/screens/login.dart';
 import 'package:chirz/utils/const.dart';
-import 'package:chirz/utils/shared-preference.dart';
 import 'package:chirz/utils/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
-
 import 'cartScreen.dart';
-import 'explore.dart';
 import 'menu-screen.dart';
 
 typedef void StringCallback(int val);
@@ -96,126 +90,6 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                   },
                 ),
               ),
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => CartScreen(),
-            //         ));
-            //   },
-            //   child: Container(
-            //     margin: EdgeInsets.only(right: 1.h),
-            //     child: const Icon(
-            //       Icons.shopping_cart,
-            //       color: Colors.black,
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: 1.h,
-            // ),
-            // GestureDetector(
-            //   onTap: () async {
-            //     showModalBottomSheet<void>(
-            //       isScrollControlled: false,
-            //       clipBehavior: Clip.hardEdge,
-            //       elevation: 1.0,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.vertical(
-            //           top: Radius.circular(20.sp),
-            //         ),
-            //       ),
-            //       context: context,
-            //       builder: (_) {
-            //         return Container(
-            //           margin:
-            //               EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
-            //           clipBehavior: Clip.hardEdge,
-            //           decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.only(
-            //                   topLeft: Radius.circular(20.sp),
-            //                   topRight: Radius.circular(20.sp))),
-            //           child: Container(
-            //             margin: EdgeInsets.only(left: 2.h),
-            //             decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.only(
-            //                     topLeft: Radius.circular(20.sp),
-            //                     topRight: Radius.circular(20.sp))),
-            //             child: Column(
-            //               children: [
-            //                 Align(
-            //                   child: GestureDetector(
-            //                     onTap: () => Navigator.pop(context),
-            //                     child: Container(
-            //                       child: Icon(
-            //                         Icons.close,
-            //                         size: 4.5.h,
-            //                       ),
-            //                       alignment: Alignment.topRight,
-            //                     ),
-            //                   ),
-            //                 ),
-            //                 Container(
-            //                   alignment: Alignment.centerLeft,
-            //                   child: Text(
-            //                     'Search for Restaurant',
-            //                     style: TextStyle(
-            //                       fontSize: 14.sp,
-            //                       fontWeight: FontWeight.bold,
-            //                     ),
-            //                   ),
-            //                 ),
-            //                 /*restaurantLocationList == null ||
-            //                         (restaurantLocationList?.data?.isEmpty ??
-            //                             true)
-            //                     ? Container()
-            //                     : Wrap(
-            //                         spacing: 8,
-            //                         children: List.generate(
-            //                             restaurantLocationList?.data?.length ??
-            //                                 0, (index) {
-            //                           return ChoiceChip(
-            //                             labelPadding: const EdgeInsets.all(2.0),
-            //                             label: Text(
-            //                               _choicesList[index],
-            //                               style: Theme.of(context)
-            //                                   .textTheme
-            //                                   .bodyText2!
-            //                                   .copyWith(
-            //                                       color: Colors.white,
-            //                                       fontSize: 14),
-            //                             ),
-            //                             selected: defaultChoiceIndex == index,
-            //                             selectedColor: Colors.deepPurple,
-            //                             onSelected: (value) {
-            //                               setState(() {
-            //                                 defaultChoiceIndex = value
-            //                                     ? index
-            //                                     : defaultChoiceIndex;
-            //                               });
-            //                               Navigator.pop(context);
-            //                               getRestaurant(_choicesList[index]);
-            //                             },
-            //                             // backgroundColor: color,
-            //                             elevation: 1,
-            //                             padding: EdgeInsets.symmetric(
-            //                                 horizontal: 4.h),
-            //                           );
-            //                         }),
-            //                       ),*/
-            //               ],
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //     );
-            //   },
-            //   child: const Icon(
-            //     Icons.search,
-            //     color: Colors.black,
-            //   ),
-            // ),
             SizedBox(
               width: 1.h,
             ),
