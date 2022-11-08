@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chirz/Model/favourite_list_model.dart';
 import 'package:chirz/providers/food_providers.dart';
+import 'package:chirz/res.dart';
 import 'package:chirz/screens/item-details-screen.dart';
 import 'package:chirz/screens/restaurant.dart';
 import 'package:chirz/utils/const.dart';
@@ -11,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
 
-import '../Res.dart';
 
 class FavouritesScreen extends StatefulWidget {
   const FavouritesScreen({Key? key}) : super(key: key);

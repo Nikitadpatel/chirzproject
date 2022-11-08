@@ -21,7 +21,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../Res.dart';
 
 Widget buttonWidget(
     {required VoidCallback callback,

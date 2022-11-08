@@ -177,6 +177,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                                 return GestureDetector(
                                   onTap: () {
                                     selectedIndex = index;
+                                    search = [];
                                     setState(() {});
                                   },
                                   child: Padding(
@@ -235,7 +236,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               child: item(
                                   search.isNotEmpty
-                                      ? Data(food: search)
+                                      ? Data(food: search,menuName: foodItems!.data![selectedIndex].menuName)
                                       : foodItems!.data![selectedIndex],
                                   selectedIndex),
                             ),
@@ -254,10 +255,13 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
       shrinkWrap: true,
       itemCount: data.food?.length ?? 0,
       itemBuilder: (context, index1) {
+        log(data.menuName.toString());
         return InkWell(
           onTap: () {
-            if (data.menuName!.toLowerCase().contains('wine') ||
-                data.menuName!.toLowerCase().contains('cocktail')) {
+            
+            if (data.menuName.toString().toLowerCase().contains('wine') ||
+                data.menuName.toString().toLowerCase().contains('cocktail') )  {
+                  // log(data.food![index1].toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -266,6 +270,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                 ),
               );
             } else {
+              // log(data.food![index1].toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -423,7 +428,7 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                           style: const TextStyle(
                               color: Colors.black, fontSize: 19),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
