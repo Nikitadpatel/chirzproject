@@ -88,8 +88,10 @@ class _ItemScreenState extends State<ItemScreen> {
                                 imageUrl: widget.foodImage,
                                 progressIndicatorBuilder:
                                     (context, url, downloadProgress) =>
-                                        CircularProgressIndicator(
-                                            value: downloadProgress.progress),
+                                        Center(
+                                          child: CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                        ),
                                 errorWidget: (context, url, error) => Container(
                                   width: double.infinity,
                                   height: 26.h,
@@ -413,7 +415,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                                                               width: 50,
                                                                               height: 50,
                                                                             ),
-                                                                            SizedBox(
+                                                                            const SizedBox(
                                                                               height: 15,
                                                                             ),
                                                                             Text(
@@ -503,7 +505,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                         )
                                         .toList(),
                                     options: CarouselOptions(
-                                      height: 45.h,
+                                      height: 48.h,
                                       viewportFraction: 1,
                                       // aspectRatio: 16/11,
                                       // enlargeStrategy:

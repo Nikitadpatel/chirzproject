@@ -236,7 +236,10 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               child: item(
                                   search.isNotEmpty
-                                      ? Data(food: search,menuName: foodItems!.data![selectedIndex].menuName)
+                                      ? Data(
+                                          food: search,
+                                          menuName: foodItems!
+                                              .data![selectedIndex].menuName)
                                       : foodItems!.data![selectedIndex],
                                   selectedIndex),
                             ),
@@ -252,16 +255,16 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
   Widget item(Data data, index) {
     log(search.length.toString());
     return ListView.builder(
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: data.food?.length ?? 0,
       itemBuilder: (context, index1) {
         log(data.menuName.toString());
         return InkWell(
           onTap: () {
-            
             if (data.menuName.toString().toLowerCase().contains('wine') ||
-                data.menuName.toString().toLowerCase().contains('cocktail') )  {
-                  // log(data.food![index1].toString());
+                data.menuName.toString().toLowerCase().contains('cocktail')) {
+              // log(data.food![index1].toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -299,48 +302,68 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                          flex: 5,
-                          child: Container(
-                            margin: EdgeInsets.only(left: 1.5.h),
-                            padding: EdgeInsets.symmetric(vertical: 2.h),
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                              width: 200,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data.food?[index1].foodName ?? '',
-                                    textAlign: TextAlign.start,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15.sp,
-                                      fontFamily: fontFamily,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    data.food?[index1].description ??
-                                        'No description',
-                                    textAlign: TextAlign.start,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 13.sp,
-                                      fontFamily: fontFamily,
-                                    ),
-                                  ),
-                                ],
+                      SizedBox(
+                        height: 100,
+                        width: 60,
+                        child: data.menuName
+                                .toString()
+                                .toLowerCase()
+                                .contains("wine")
+                            ? Image.asset(
+                                "assets/images/mdi_bottle-wine.png",
+                                width: 50,
+                                height: 50,
+                              )
+                            : Image.asset(
+                                "assets/images/Vector.png",
+                                width: 40,
+                                height: 70,
                               ),
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 1.5.h),
+                          padding: EdgeInsets.symmetric(vertical: 2.h),
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.food?[index1].foodName ?? '',
+                                  textAlign: TextAlign.start,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.sp,
+                                    fontFamily: fontFamily,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  data.food?[index1].description ??
+                                      'No description',
+                                  textAlign: TextAlign.start,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 13.sp,
+                                    fontFamily: fontFamily,
+                                  ),
+                                ),
+                              ],
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       Text(
                         "£ ${data.food?[index1].pricePerGlass} / ${data.food?[index1].pricePerBott}",
                         textAlign: TextAlign.start,
@@ -372,16 +395,18 @@ class _RestaurantMenuScreenState extends State<RestaurantMenuScreen> {
                           clipBehavior: Clip.hardEdge,
                           height: 100,
                           decoration: BoxDecoration(
-                            image: const DecorationImage(image: AssetImage("assets/images/Rectangle 51.png"),fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.withOpacity(0.7)
-                          ),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/Rectangle 51.png"),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.withOpacity(0.7)),
                           child: CachedNetworkImage(
                             imageUrl: data.food?[index1].image ?? '',
                             placeholder: (context, url) => const Center(
                                 child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Image.asset(
-                                'assets/images/Vector (2).png'),
+                            errorWidget: (context, url, error) =>
+                                Image.asset('assets/images/Vector (2).png'),
                             fit: BoxFit.cover,
                           ),
                         ),
