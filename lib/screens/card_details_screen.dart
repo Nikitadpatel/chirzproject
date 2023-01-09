@@ -169,14 +169,45 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SizedBox(
-                                          child: CachedNetworkImage(
+                                          child:CachedNetworkImage(
+                                    imageUrl: checkoutModel
+                                          ?.data
+                                          ?.itemData?[index]
+                                          .itemImage ??
+                                      '',
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10.sp),
+                                              ),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                      placeholder: (context, url) =>
+                                      const Center(
+                                          child:
+                                          CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Container(
+                                            //color: Colors.grey,
+                                            child: Image.asset(
+                                                "assets/images/Vector.png" ),
+                                          ),
+                                    ),
+
+
+                                          /*CachedNetworkImage(
                                             imageUrl: checkoutModel
                                                     ?.data
                                                     ?.itemData?[index]
                                                     .itemImage ??
                                                 '',
                                             alignment: Alignment.center,
-                                          ),
+                                          ),*/
                                           height: 80,
                                           width: 80,
                                         ),

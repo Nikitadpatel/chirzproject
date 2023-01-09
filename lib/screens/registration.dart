@@ -700,7 +700,7 @@ class _RegistrationState extends State<Registration> {
       }
     } else {
       buildErrorDialog(
-          context, '', 'Passwrod and Confirm Password must be same');
+          context, '', 'Password and Confirm Password must be same');
     }
   }
 }

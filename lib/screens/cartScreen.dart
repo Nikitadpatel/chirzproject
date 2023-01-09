@@ -138,7 +138,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   CircularProgressIndicator()),
                                       errorWidget: (context, url, error) =>
                                           Container(
-                                        color: Colors.grey,
+                                        //color: Colors.grey,
                                         child: Image.asset(
                                             Res.profile_pic_placeholder),
                                       ),

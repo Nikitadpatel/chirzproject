@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:chirz/Model/user_model.dart';
 import 'package:chirz/providers/auth-providers.dart';
+import 'package:chirz/screens/forgetpass.dart';
 import 'package:chirz/screens/registration.dart';
 import 'package:chirz/utils/const.dart';
 import 'package:chirz/utils/shared-preference.dart';
@@ -109,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>forgetpass()));
+                    },
                     child: Text(
                       "Forgot password?",
                       style: TextStyle(

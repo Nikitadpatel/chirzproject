@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
 import '../res.dart';
-
 class ItemScreen extends StatefulWidget {
   final String? menuName;
   final MenuData? menuData;
@@ -24,7 +23,6 @@ class ItemScreen extends StatefulWidget {
   final dynamic? foodPrice;
   final dynamic? priceBottle;
   final dynamic? priceGlass;
-
   const ItemScreen({
     Key? key,
     this.menuName,
@@ -37,32 +35,31 @@ class ItemScreen extends StatefulWidget {
     this.priceBottle,
     this.priceGlass,
   }) : super(key: key);
-
   @override
   _ItemScreenState createState() => _ItemScreenState();
 }
-
 class _ItemScreenState extends State<ItemScreen> {
   bool isLoading = true;
-
+  String? winetype;
   WineListModel? wineList;
-
   @override
   void initState() {
     groupValue = 0;
     setState(() {
+      print(widget.foodId);
+      isselect1=false;
       isLoading = true;
+      isselect2=false;
+      isselect3=false;
+      if (widget.isWineList ?? false) {
+        getWineList();
+      }
     });
-    if (widget.isWineList ?? false) {
-      getWineList();
-    }
     super.initState();
   }
-
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int sliderIndex = 0;
   CarouselController buttonCarouselController = CarouselController();
-
   @override
   Widget build(BuildContext context) {
     return commanScreen(
@@ -96,10 +93,10 @@ class _ItemScreenState extends State<ItemScreen> {
                                   width: double.infinity,
                                   height: 26.h,
                                   decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
+                                   /* image: DecorationImage(
+                                     image: AssetImage(
                                           "assets/images/Rectangle 51.png"),
-                                    ),
+                                    ),*/
                                   ),
                                   child: Image.asset(
                                     "assets/images/Vector (3).png",
@@ -123,13 +120,14 @@ class _ItemScreenState extends State<ItemScreen> {
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Text(
                           widget.menuName ?? '',
                           style: const TextStyle(
-                            fontSize: 22,
+                            fontSize: 32.0,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Lato",
                             color: Colors.black,
                           ),
                           maxLines: 2,
@@ -137,27 +135,29 @@ class _ItemScreenState extends State<ItemScreen> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Text(
                           widget.discription ?? "no discription",
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Lato",
+                            color: Color(0xffb090A0A),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Text(
                           '£${widget.foodPrice}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "Lato",
                             color: Colors.black,
                           ),
                           maxLines: 1,
@@ -167,23 +167,23 @@ class _ItemScreenState extends State<ItemScreen> {
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            (wineList?.data ?? []).isEmpty
-                                ? Container()
-                                : Container(
-                                    margin: EdgeInsets.only(top: 8.h),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        buttonCarouselController.nextPage(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            curve: Curves.fastOutSlowIn);
-                                      },
-                                      icon: const Icon(
-                                        Icons.arrow_back_ios_rounded,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
+                           // (wineList?.data ?? []).isEmpty
+                           //    ? Container()
+                           //   : Container(
+                           //         margin: EdgeInsets.only(top: 8.h),
+                            //        child: IconButton(
+                               //       onPressed: () {
+                                //       buttonCarouselController.nextPage(
+                                //            duration: const Duration(
+                                //               milliseconds: 300),
+                                 //         curve: Curves.fastOutSlowIn);
+                                 //     },
+                                //    icon: const Icon(
+                                 //      Icons.arrow_back_ios_rounded,
+                                 //       color: Colors.black,
+                                 //     ),
+                                  //  ),
+                                //  ),
                             Expanded(
                               flex: 4,
                               child: Column(
@@ -191,19 +191,24 @@ class _ItemScreenState extends State<ItemScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20),
+                                    padding: const EdgeInsets.only(top: 10),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         GestureDetector(
                                             onTap: () {
-                                              setState(() => groupValue = 0);
-                                              if (widget.isWineList ?? false) {
-                                                getWineList();
-                                              }
+                                              setState(()
+                                                  {
+                                                  groupValue = 0;
+                                                  if (widget.isWineList ?? false) {
+                                                    getWineList();
+                                                  }
+                                                  });
                                             },
                                             child: Container(
+                                              height: 32.0,
+                                              width: 80.0,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
                                                   color: groupValue != 0
@@ -224,9 +229,10 @@ class _ItemScreenState extends State<ItemScreen> {
                                                     color: groupValue != 0
                                                         ? null
                                                         : backGroundColor,
-                                                    fontSize: 13.sp,
+                                                    fontSize: 16,
+                                                    fontFamily: "Lato",
                                                     fontWeight:
-                                                        FontWeight.w600),
+                                                        FontWeight.w400),
                                               ),
                                             )),
                                         const SizedBox(
@@ -234,12 +240,15 @@ class _ItemScreenState extends State<ItemScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            setState(() => groupValue = 2);
+                                            setState((){ groupValue = 2;
                                             if (widget.isWineList ?? false) {
                                               getWineList();
                                             }
+                                            });
                                           },
                                           child: Container(
+                                            height: 32.0,
+                                            width: 100.0,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                                 color: groupValue != 2
@@ -257,8 +266,10 @@ class _ItemScreenState extends State<ItemScreen> {
                                                   color: groupValue != 2
                                                       ? null
                                                       : backGroundColor,
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w600),
+                                                  fontSize: 16,
+                                                  fontFamily: "Lato",
+                                                  fontWeight:
+                                                  FontWeight.w400),
                                             ),
                                           ),
                                         ),
@@ -266,7 +277,7 @@ class _ItemScreenState extends State<ItemScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 30,
+                                    height: 10,
                                   ),
                                   CarouselSlider(
                                     carouselController:
@@ -276,16 +287,16 @@ class _ItemScreenState extends State<ItemScreen> {
                                           (item) => Card(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            elevation: 5,
+                                                    BorderRadius.circular(20)),
+                                            elevation: 4,
                                             color: Colors.white,
                                             child: Container(
                                               margin:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 30,
                                                       vertical: 10),
-                                              height: 50,
-                                              width: 270,
+                                              width: 283,
+                                              height: 45.h,
                                               decoration: const BoxDecoration(
                                                 color: Colors.white,
                                               ),
@@ -310,9 +321,6 @@ class _ItemScreenState extends State<ItemScreen> {
                                                               double.infinity,
                                                           child: Column(
                                                             children: [
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
                                                               Padding(
                                                                 padding: const EdgeInsets
                                                                         .symmetric(
@@ -328,7 +336,6 @@ class _ItemScreenState extends State<ItemScreen> {
                                                                           : (wineList?.data?[sliderIndex].itemName ??
                                                                               ''),
                                                                   maxLines: 2,
-
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -338,162 +345,411 @@ class _ItemScreenState extends State<ItemScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold,
+                                                                        fontFamily: "Lato",
                                                                     fontSize:
                                                                         18,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              const Text(
-                                                                " 2022",
+                                                              const SizedBox(
+                                                                height: 5.0,
+                                                              ),
+                                                              (groupValue == 0) ? Text(
+                                                                wineList?.data ==
+                                                                    null
+                                                                    ? ''
+                                                                    : (wineList?.data?.isEmpty ??
+                                                                    true)
+                                                                    ? ''
+                                                                    : (wineList?.data?[sliderIndex].itemType
+                                                                    ??
+                                                                    ''),
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .black,
                                                                     fontSize:
-                                                                        14,
+                                                                    17,
+                                                                    fontFamily: "Lato",
+                                                                    fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                                textAlign:
+                                                                TextAlign
+                                                                    .center,
+                                                              ) :Container(),
+                                                              (groupValue == 0) ?  Text(
+                                                                  wineList?.data ==
+                                                                      null
+                                                                      ? ''
+                                                                      : (wineList?.data?.isEmpty ??
+                                                                      true)
+                                                                      ? ''
+                                                                      : (wineList?.data?[sliderIndex].year ??
+                                                                      ''),
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontFamily: "Lato",
+                                                                    fontSize:
+                                                                        17,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600),
+                                                                            .w400),
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
-                                                              ),
+                                                              ) : Container(),
                                                               const SizedBox(
-                                                                height: 20,
+                                                                height: 17,
                                                               ),
                                                               groupValue == 0
-                                                                  ? Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceAround,
-                                                                      children: [
-                                                                        Column(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceAround,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            Image.asset(
-                                                                              // groupValue == 0
-                                                                              //     ? Res.glass
-                                                                              //     : Res.cocktail,
+                                                             ?
+                                                                  //wine
+                                                              (((wineList?.data?[sliderIndex].pricePerBott) == "") && ((wineList?.data?[sliderIndex].pricePerGlass) != "") ?
+                                                             //if only wine per glass available
+                                                              Container(
+                                                              child: GestureDetector(
+                                                                 /*onTap:(){
+                                                                   print(wineList?.data?[sliderIndex].pricePerBott.toString());
+                                                                    setState((){
+                                                                      isselect1=!isselect1;
+                                                                      /* if (widget.isWineList ?? false) {
+                                                                          getWineList();
+                                                                       }*/
+                                                                    });
 
-                                                                              "assets/images/fa-solid_wine-glass.png",
-                                                                              width: 50,
-                                                                              height: 50,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 15,
-                                                                            ),
-                                                                            Text(
-                                                                              "£${item.pricePerGlass}",
-                                                                              //     groupValue ==
-                                                                              // 0
-                                                                              // ? (item.pricePerGlass
-                                                                              // .toString() +
-                                                                              // '£')
-                                                                              // : groupValue ==
-                                                                              // 2
-                                                                              // ? (item.pricePeCocktail.toString() +
-                                                                              // '£')
-                                                                              // : '',
-                                                                              style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-                                                                            ),
-                                                                            const Text(
-                                                                              "per glass",
-                                                                              style: TextStyle(color: Colors.black, fontSize: 13),
-                                                                            ),
-                                                                          ],
+                                                                  },*/
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment.spaceAround,
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Container(
+                                                                        height:60.0,
+                                                                        width: 50.0,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                          //  border:
+                                                                           // isselect1 ?  Border.all(color: Colors.red,
+                                                                              //  width: 2.0):null
+                                                                          ),
+                                                                        child: Image.asset(
+                                                                          // groupValue == 0
+                                                                          //     ? Res.glass
+                                                                          //     : Res.cocktail,
+                                                                          "assets/images/fa-solid_wine-glass.png",
+                                                                          width: 50,
+                                                                          height: 50,
                                                                         ),
-                                                                        Column(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            Image.asset(
-                                                                              "assets/images/mdi_bottle-wine.png",
-                                                                              width: 50,
-                                                                              height: 50,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 15,
-                                                                            ),
-                                                                            Text(
-                                                                              // "£${wineList?.data?[sliderIndex].pricePerBott}",
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 15,
+                                                                      ),
+                                                                      Text(
+                                                                        "£${item.pricePerGlass}",
+                                                                        //     groupValue ==
+                                                                        // 0
+                                                                        // ? (item.pricePerGlass
+                                                                        // .toString() +
+                                                                        // '£')
+                                                                        // : groupValue ==
+                                                                        // 2
+                                                                        // ? (item.pricePeCocktail.toString() +
+                                                                        // '£')
+                                                                        // : '',
+                                                                        style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      const Text(
+                                                                        "per glass",
+                                                                        style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ):
+                                                              (((wineList?.data?[sliderIndex].pricePerGlass) == "")  && (wineList?.data?[sliderIndex].pricePerBott) != "")?
+                                                                  //if only wine per bottle available
+                                                              Container(
+                                                                child: GestureDetector(
+                                                               /*   onTap: (){
+                                                                    setState((){
+                                                                      isselect2=!isselect2;
+                                                                       /*if (widget.isWineList ?? false) {
+                                                                           getWineList();
+                                                                      }*/
+                                                                    });
+                                                                  },*/
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment.spaceBetween,
+                                                                    crossAxisAlignment:
+                                                                    CrossAxisAlignment.center,
+                                                                    children: [
+                                                                      Container(
+                                                                        height:60.0,
+                                                                        width: 50.0,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                           // border:
+                                                                           //isselect2?  Border.all(color: Colors.red,
+                                                                            //    width: 2.0):null
+                                                                        ),
 
-                                                                              '£${item.pricePerBott}',
-                                                                              //     groupValue ==
-                                                                              // 0
-                                                                              // ? (item.pricePerBott
-                                                                              // .toString() +
-                                                                              // '£')
-                                                                              // : groupValue ==
-                                                                              // 2
-                                                                              // ? (item.pricePeCocktail.toString() +
-                                                                              // '£')
-                                                                              // : '',
-                                                                              style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                        child: Image.asset(
+                                                                          "assets/images/mdi_bottle-wine (1).png",
+                                                                          width: 50,
+                                                                          height: 50,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 15,
+                                                                      ),
+                                                                      Text(
+                                                                        // "£${wineList?.data?[sliderIndex].pricePerBott}",
+
+                                                                        '£${item.pricePerBott}',
+                                                                        //     groupValue ==
+                                                                        // 0
+                                                                        // ? (item.pricePerBott
+                                                                        // .toString() +
+                                                                        // '£')
+                                                                        // : groupValue ==
+                                                                        // 2
+                                                                        // ? (item.pricePeCocktail.toString() +
+                                                                        // '£')
+                                                                        // : '',
+                                                                        style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      const Text(
+                                                                        "per bottle",
+                                                                        style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ):
+                                                                  //if both available for wine type
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                      children: [
+                                                                        GestureDetector(
+                                                                         /* onTap:(){
+                                                                            setState(() {
+                                                                             // isselect = 0;
+                                                                              isselect1=!isselect1;
+                                                                              isselect2=false;
+
+
+                                                                             /* if(widget.isWineList ==false){
+                                                                                getWineList();
+                                                                              }*/
+                                                                            });
+
+                                                                          },*/
+                                                                          child: SingleChildScrollView(
+                                                                            child: Column(
+                                                                             mainAxisAlignment:
+                                                                               MainAxisAlignment.spaceAround,
+                                                                            crossAxisAlignment:
+                                                                                 CrossAxisAlignment.center,
+                                                                              children: [
+
+                                                                                Container(
+                                                                                  padding:EdgeInsets.only(top:25.0,bottom:15.0),
+                                                                                  height:70.0,
+                                                                                  width:50.0,
+                                                                                  decoration: BoxDecoration(
+                                                                                      borderRadius: BorderRadius.circular(10.0),
+                                                                                  //    border:
+                                                                                    //  isselect1 ? Border.all(color: Colors.red,
+                                                                                      //    width: 2.0):null
+                                                                                  ),
+                                                                                  child: Image.asset(
+                                                                                    // groupValue == 0
+                                                                                    //     ? Res.glass
+                                                                                    //     : Res.cocktail,
+                                                                                    "assets/images/fa-solid_wine-glass.png",
+                                                                                    width: 25.0,
+                                                                                    height: 30.0,
+                                                                                  ),
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  height: 15,
+                                                                                ),
+                                                                                Text(
+                                                                                  "£${item.pricePerGlass}",
+                                                                                  //     groupValue ==
+                                                                                  // 0
+                                                                                  // ? (item.pricePerGlass
+                                                                                  // .toString() +
+                                                                                  // '£')
+                                                                                  // : groupValue ==
+                                                                                  // 2
+                                                                                  // ? (item.pricePeCocktail.toString() +
+                                                                                  // '£')
+                                                                                  // : '',
+                                                                                  style: const TextStyle(color: Colors.black, fontSize: 16,
+                                                                                      fontFamily: "Lato",
+                                                                                      fontWeight: FontWeight.bold),
+                                                                                ),
+                                                                                const Text(
+                                                                                  "per glass",
+                                                                                  style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                                ),
+                                                                              ],
                                                                             ),
-                                                                            const Text(
-                                                                              "per bottle",
-                                                                              style: TextStyle(color: Colors.black, fontSize: 13),
+                                                                          ),
+                                                                        ),
+                                                                        GestureDetector(
+                                                                        /* onTap:(){
+                                                                            setState(() {
+                                                                             // isselect=1;
+                                                                              isselect2=!isselect2;
+                                                                              isselect1=false;
+                                                                             /* if(widget.isWineList ==false){
+                                                                                getWineList();
+                                                                              }*/
+                                                                            });
+                                                                          },*/
+                                                                          child: SingleChildScrollView(
+                                                                            child: Column(
+                                                                              mainAxisAlignment:
+                                                                                  MainAxisAlignment.spaceBetween,
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Container(
+                                                                                  height:70.0,
+                                                                                  width: 50.0,
+                                                                                  padding:EdgeInsets.only(top:0.0,bottom:0.0),
+                                                                                  decoration: BoxDecoration(
+                                                                                      borderRadius: BorderRadius.circular(10.0),
+                                                                                     // border:
+                                                                                     // isselect2 ?  Border.all(color: Colors.red,
+                                                                                       //   width: 2.0):null
+                                                                                  ),
+                                                                                  child: Image.asset(
+                                                                                    "assets/images/mdi_bottle-wine (1).png",
+                                                                                    width: 50.0,
+                                                                                    height: 70.0,
+                                                                                  ),
+                                                                                ),
+                                                                                const SizedBox(
+                                                                                  height: 15,
+                                                                                ),
+                                                                                Text(
+                                                                                  // "£${wineList?.data?[sliderIndex].pricePerBott}",
+                                                                                  '£${item.pricePerBott}',
+                                                                                  //     groupValue ==
+                                                                                  // 0
+                                                                                  // ? (item.pricePerBott
+                                                                                  // .toString() +
+                                                                                  // '£')
+                                                                                  // : groupValue ==
+                                                                                  // 2
+                                                                                  // ? (item.pricePeCocktail.toString() +
+                                                                                  // '£')
+                                                                                  // : '',
+                                                                                  style: const TextStyle(color: Colors.black,
+                                                                                      fontFamily: "Lato",
+                                                                                      fontSize: 16, fontWeight: FontWeight.bold),
+                                                                                ),
+                                                                                const Text(
+                                                                                  "per bottle",
+                                                                                  style: TextStyle(color: Colors.black, fontSize: 13,
+                                                                                    fontFamily: "Lato",
+                                                                                  ),
+                                                                                ),
+                                                                              ],
                                                                             ),
-                                                                          ],
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     )
-                                                                  : Column(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceAround,
-                                                                      children: [
-                                                                        Image
-                                                                            .asset(
-                                                                          "assets/images/Vector.png",
-                                                                          width:
-                                                                              60,
-                                                                          height:
-                                                                              60,
-                                                                        ),
-                                                                        const SizedBox(
-                                                                          height:
-                                                                              10,
-                                                                        ),
-                                                                        Text(
-                                                                          "£${item.pricePeCocktail}",
-                                                                          style: const TextStyle(
-                                                                              color: Colors.black,
-                                                                              fontSize: 18,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        )
-                                                                      ],
-                                                                    ),
-                                                              const SizedBox(
-                                                                height: 30,
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
-                                                                child:
-                                                                    buttonWidget(
-                                                                        callback:
-                                                                            () {
-                                                                          Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => ItemDetailsScreen(wineId: item.id),
+                                                              ):
+                                                              //for cocktail
+                                                              GestureDetector(
+                                                              /*  onTap:(){
+                                                                  //groupValue =2;
+                                                                  setState(() {
+                                                               groupValue=2;
+                                                               isselect3=!isselect3;
+                                                                    if(widget.isWineList==false){
+                                                                      getWineList();
+                                                                    }
+                                                                  });
+                                                                },*/
+                                                                    child: SingleChildScrollView(
+                                                                      child: Column(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment
+                                                                                  .spaceAround,
+                                                                          children: [
+                                                                            Container(
+                                                                              height:70.0,
+                                                                              width: 50.0,
+                                                                              decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                          //        border:
+                                                                           //   isselect3 ?  Border.all(color: Colors.red,
+                                                                             //        width: 2.0):null
+                                                                              ),
+                                                                              child: Image
+                                                                                  .asset(
+                                                                                "assets/images/Vector.png",
+                                                                                width:
+                                                                                    50,
+                                                                                height:
+                                                                                    50,
+                                                                              ),
                                                                             ),
-                                                                          );
-                                                                        },
-                                                                        text:
-                                                                            "See more",
-                                                                        radius:
-                                                                            100,
-                                                                        color:
-                                                                            backGroundColor),
+                                                                              SizedBox(height: 10.0,),
+                                                                            Text(
+                                                                              "£${item.pricePeCocktail}",
+                                                                              style: const TextStyle(
+                                                                                  color: Colors.black,
+                                                                                  fontSize: 18,
+                                                                                  fontWeight: FontWeight.bold),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                    ),
+                                                                  ),
+                                                              const SizedBox(
+                                                                height: 13,
+                                                              ),
+                                                              SizedBox(
+                                                               height: 45.0,
+                                                               width: 130.0,
+                                                                child: ElevatedButton(
+                                                                    style: ElevatedButton.styleFrom(
+                                                                        padding: EdgeInsets.symmetric(horizontal: 1.h,
+                                                                         vertical: 1.h),
+                                                                        shape: RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.circular(40), // <-- Radius
+                                                                        ),
+                                                                     backgroundColor: Color(0xFFAC262C)
+                                                                    ),
+
+                                                                  onPressed: (){
+                                                                    Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (
+                                                                            context) =>
+                                                                            ItemDetailsScreen(
+                                                                              wineId: item
+                                                                                  .id,),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  child:Text("See more", style: TextStyle(
+                                                                    color: Colors.white,
+                                                                    fontSize: 12.sp,
+                                                                  ),)
+                                                                )
                                                               )
                                                             ],
                                                           ),
@@ -505,20 +761,21 @@ class _ItemScreenState extends State<ItemScreen> {
                                         )
                                         .toList(),
                                     options: CarouselOptions(
-                                      height: 48.h,
-                                      viewportFraction: 1,
+                                      height: 45.h,
+                                      viewportFraction: 0.75,
                                       // aspectRatio: 16/11,
-                                      // enlargeStrategy:
-                                      //     CenterPageEnlargeStrategy.scale,
+                                      enlargeStrategy:
+                                          CenterPageEnlargeStrategy.scale,
                                       onPageChanged: (index, reason) {
                                         // if (callback != null) callback(index);
-
                                         setState(() {
+                                          isselect1=false;
+                                          isselect2=false;
                                           sliderIndex = index;
                                         });
                                       },
                                       initialPage: 0,
-                                      enlargeCenterPage: false,
+                                      enlargeCenterPage: true,
                                       pageSnapping: true,
                                       enableInfiniteScroll: false,
                                       reverse: false,
@@ -534,26 +791,29 @@ class _ItemScreenState extends State<ItemScreen> {
                                 ],
                               ),
                             ),
-                            (wineList?.data ?? []).isEmpty
-                                ? Container()
-                                : Container(
-                                    margin: EdgeInsets.only(top: 8.h),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        buttonCarouselController.previousPage(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            curve: Curves.fastOutSlowIn);
-                                      },
-                                      icon: Icon(
-                                        Icons.navigate_next_rounded,
-                                        color: Colors.black,
-                                        size: 5.h,
-                                      ),
-                                    ),
-                                  ),
+                           // (wineList?.data ?? []).isEmpty
+                           //     ? Container()
+                             // : Container(
+                                  //  margin: EdgeInsets.only(top: 8.h),
+                                  //  child: IconButton(
+                                     // onPressed: () {
+                                   //     buttonCarouselController.previousPage(
+                                     //       duration: const Duration(
+                                   //             milliseconds: 300),
+                                 //           curve: Curves.fastOutSlowIn);
+                                    //  },
+                                  //    icon: Icon(
+                                    //    Icons.navigate_next_rounded,
+                                  //      color: Colors.black,
+                                 //       size: 5.h,
+                                   //   ),
+                                 //   ),
+                               //   ),
                           ],
                         ),
+                        SizedBox(height: 3.h,),
+
+                        SizedBox(height: 3.h,),
                       ],
                     ),
                   ),
@@ -640,25 +900,26 @@ class _ItemScreenState extends State<ItemScreen> {
       isLoading: isLoading,
     );
   }
-
   getWineList() {
     checkInternet().then(
       (internet) async {
         if (internet) {
           sliderIndex = 0;
-
           FoodItemsProviders()
-              .wineListingAPi(groupValue == -1
+              .wineListingAPi( groupValue== -1
                   ? {
                       'food_id': widget.foodId,
                     }
                   : {
                       'food_id': widget.foodId,
-                      'wine_by': groupValue == 0 ? 'bottle' : 'cocktail',
+
+            'wine_by': groupValue==0?(isselect1?"glass":"bottle"):"cocktail",
+
+
+                      //'wine_by': groupValue == 1 ? 'bottle' : 'cocktail',
                     })
               .then((Response response) async {
             wineList = WineListModel.fromJson(json.decode(response.body));
-
             if (response.statusCode == 200 && wineList?.status == 1) {
               setState(() {
                 isLoading = false;
@@ -668,6 +929,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 isLoading = false;
               });
               buildErrorDialog(context, '', wineList?.message.toString() ?? '');
+              print(wineList?.message?.toString());
             }
           }).catchError(
             (onError) {
@@ -676,7 +938,7 @@ class _ItemScreenState extends State<ItemScreen> {
                   isLoading = false;
                 },
               );
-              buildErrorDialog(context, 'Error', 'Something went wrong');
+              buildErrorDialog(context, '', 'Something went wrong');
             },
           );
         } else {

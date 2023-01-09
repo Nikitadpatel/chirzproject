@@ -78,7 +78,8 @@ class Data {
       dynamic isDelete, 
       dynamic createdDate, 
       dynamic updatedDate, 
-      dynamic isFavourite, 
+      dynamic isFavourite,
+      dynamic isCocktail,
       Restaurants_detail? restaurantsDetail,}){
     _id = id;
     _userId = userId;
@@ -99,6 +100,7 @@ class Data {
     _createdDate = createdDate;
     _updatedDate = updatedDate;
     _isFavourite = isFavourite;
+    _isCocktail = isCocktail;
     _restaurantsDetail = restaurantsDetail;
 }
 
@@ -122,6 +124,7 @@ class Data {
     _createdDate = json['created_date'];
     _updatedDate = json['updated_date'];
     _isFavourite = json['is_favourite'];
+    _isCocktail = json['is_cocktail'];
     _restaurantsDetail = json['restaurants_detail'] != null ? Restaurants_detail.fromJson(json['restaurants_detail']) : null;
   }
   dynamic _id;
@@ -143,6 +146,7 @@ class Data {
   dynamic _createdDate;
   dynamic _updatedDate;
   dynamic _isFavourite;
+  dynamic _isCocktail;
   Restaurants_detail? _restaurantsDetail;
 
   dynamic get id => _id;
@@ -164,6 +168,7 @@ class Data {
   dynamic get createdDate => _createdDate;
   dynamic get updatedDate => _updatedDate;
   dynamic get isFavourite => _isFavourite;
+  dynamic get isCocktail => _isCocktail;
   Restaurants_detail? get restaurantsDetail => _restaurantsDetail;
 
   Map<String, dynamic> toJson() {
@@ -187,6 +192,7 @@ class Data {
     map['created_date'] = _createdDate;
     map['updated_date'] = _updatedDate;
     map['is_favourite'] = _isFavourite;
+    map['is_cocktail'] = _isCocktail;
     if (_restaurantsDetail != null) {
       map['restaurants_detail'] = _restaurantsDetail?.toJson();
     }

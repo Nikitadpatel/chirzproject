@@ -193,7 +193,7 @@ buildErrorDialog(BuildContext context,String title, String contant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      titlePadding: EdgeInsets.all(0.0),
+      titlePadding: EdgeInsets.all(10.0),
       contentPadding: EdgeInsets.only(top: 0.0,bottom: 0.0,left: 20.0),
       title: Text(title,
           style: const TextStyle(
@@ -362,15 +362,15 @@ class _drawerWidgetsState extends State<drawerWidgets> {
                           children: [
                             Container(
                               // alignment: Alignment.bottomCenter,
-                              height: 70.0,
-                              width: 70.0,
+                              height: 80.0,
+                              width: 80.0,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle
                               ),
                               // margin: EdgeInsets.only(right: 2.h),
                               child: CircleAvatar(
                                 backgroundColor: Colors.grey,
-                                child: Image.asset("assets/new_icon.png",height: 120.0,width: 120.0,),
+                                child: Image.asset("assets/new_icon.png",height: 60.0,width: 60.0,),
                               ),
                             ),
                             SizedBox(width: 10.0,),

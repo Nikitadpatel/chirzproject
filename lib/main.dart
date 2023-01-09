@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 int? groupValue = -1;
+bool isselect1=true;
+bool isselect2=true;
+bool isselect3=true;
+
 
 void main() {
   runApp(

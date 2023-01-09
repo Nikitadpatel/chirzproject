@@ -169,7 +169,7 @@ Future<bool> determinePosition() async {
   return serviceEnabled;
 }
 
-String fontFamily = 'Poppins';
+String fontFamily = 'Lato';
 UserModel? userData;
 const Color whiteColor = Colors.white;
 const Color blueColor = Colors.blueAccent;

@@ -4,14 +4,13 @@
 
 class UserModel {
   UserModel({
-      int? status, 
+      int? status,
       String? message, 
       Data? data,}){
     _status = status;
     _message = message;
     _data = data;
 }
-
   UserModel.fromJson(dynamic json) {
     _status = json['status'];
     _message = json['message'];

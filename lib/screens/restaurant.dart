@@ -1,56 +1,102 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chirz/Model/locations_list_model.dart';
 import 'package:chirz/Model/restaurant_data.dart';
+import 'package:chirz/Model/review_model.dart';
+import 'package:chirz/providers/auth-providers.dart';
 import 'package:chirz/providers/restaurent-provider.dart';
 import 'package:chirz/res.dart';
 import 'package:chirz/utils/const.dart';
+import 'package:chirz/utils/shared-preference.dart';
 import 'package:chirz/utils/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:sizer/sizer.dart';
 import 'cartScreen.dart';
 import 'menu-screen.dart';
 
 typedef void StringCallback(int val);
-
 class RestaurantsScreen extends StatefulWidget {
   const RestaurantsScreen({Key? key}) : super(key: key);
-
   @override
   _RestaurantsScreenState createState() => _RestaurantsScreenState();
 }
 
 class _RestaurantsScreenState extends State<RestaurantsScreen> {
-  bool isLoading = true;
+  var rid;
+  dynamic data;
+dynamic  deviceid;
 
-  RestaurantData? restaurants;
-  RestaurantData? newRestaurants;
-  RestaurantData? nearRestaurants;
-  LocationsListModel? restaurantLocationList;
+  // Future<String?> getDeviceIdentifier() async {
+  //   String? deviceIdentifier;
+  //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  //   if (Platform.isAndroid) {
+  //     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  //     setState(() {
+  //       deviceIdentifier = androidInfo.androidId!;
+  //       deviceid=deviceIdentifier;
+  //       print(deviceid);
+  //       print("hiiii");
+  //       print(deviceIdentifier);
+  //     });
+  //   } else if (Platform.isIOS) {
+  //     IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+  //     setState(() {
+  //       deviceIdentifier = iosInfo.identifierForVendor!;
+  //       deviceid=deviceIdentifier;
+  //       print(deviceid);
+  //     });
+  //   }
+  //   return deviceIdentifier;
+  // }
+  bool isLoading = true;
+    ReviewModel? reviewmodel;
+   RestaurantData? restaurants;
+   RestaurantData? newRestaurants;
+   RestaurantData? nearRestaurants;
+   LocationsListModel? restaurantLocationList;
   TextStyle textStyle = TextStyle(
     color: Colors.grey,
     fontSize: 12.sp,
   );
   final TextEditingController _searchQuery = TextEditingController();
-  int defaultChoiceIndex = 0;
+  int? defaultChoiceIndex = 0;
   final List<String> _choicesList = [];
-
   @override
   void initState() {
-    getPopular();
-
+   getPopular();
+   getip();
     super.initState();
   }
+  getip()async{
+    try {
+      /// Initialize Ip Address
+      var ipAddress = IpAddress(type: RequestType.text);
 
+      /// Get the IpAddress based on requestType.
+      data =  await ipAddress.getIpAddress();
+      print(data);
+      setState(() {
+        deviceid=data;
+
+      });
+      print(deviceid);
+    } on IpAddressException catch (exception) {
+      /// Handle the exception.
+      print(exception.message);
+    }
+  }
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int sliderIndex = 0;
+  int index1=0;
   ScrollController nearController = ScrollController();
   ScrollController newController = ScrollController();
   ScrollController popularController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     return commanScreen(
@@ -64,17 +110,19 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          centerTitle: true,
+          centerTitle: false,
           title: const Text(
             'Restaurants',
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400,
+              fontFamily: "Lato",
+              fontSize: 24,
               color: Colors.black,
             ),
           ),
           actions: [
             if (userData != null)
-              Container(
+           /*   Container(
                 child: NamedIcon(
                   iconData: const Icon(
                     Icons.shopping_cart,
@@ -89,7 +137,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                     );
                   },
                 ),
-              ),
+              ),*/
             SizedBox(
               width: 1.h,
             ),
@@ -98,7 +146,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                 _scaffoldKey.currentState?.openDrawer();
               },
               child: Container(
-                margin: EdgeInsets.only(right: 1.h),
+                margin: EdgeInsets.only(right: 2.h),
                 child: const Icon(
                   Icons.menu,
                   color: Colors.black,
@@ -125,34 +173,37 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                         if (value.isNotEmpty) {
                           getRestaurant(value);
                         }
+                        else if(value.isEmpty){
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>RestaurantsScreen()));
+                        }
+                        else{
+                        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>RestaurantsScreen()));
+                        }
                       },
                       decoration: InputDecoration(
-                        fillColor: Colors.white,
+                      //  fillColor: Colors.white,
                         hoverColor: Colors.white,
                         focusColor: Colors.white,
-                        filled: true,
+                        filled: false,
                         prefixIcon: Icon(
                           Icons.search_rounded,
-                          color: Colors.black,
+                          color: Colors.grey,
                           size: 3.0.h,
                         ),
                         hintText: 'Search',
                         hintStyle: textStyle,
-                        border: OutlineInputBorder(
+                        disabledBorder: InputBorder.none,
+                        border: InputBorder.none,
+                      /*border: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(12.sp)),
-                          borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1.0.w,
-                          ),
+
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(12.sp)),
-                          borderSide: const BorderSide(
-                            color: Colors.black,
-                          ),
-                        ),
+
+                        ),*/
                       ),
                     ),
                   ),
@@ -210,6 +261,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                     right: 1.h, bottom: 1.h),
                                                 child: GestureDetector(
                                                   onTap: () async {
+
                                                     String? search =
                                                         await Navigator.push(
                                                             context,
@@ -326,10 +378,11 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                         margin: EdgeInsets.symmetric(
                                             vertical: 2.h, horizontal: 4.5.h),
                                         child: Text(
-                                          'Near you',
+                                          'Nearby',
                                           style: TextStyle(
+                                            fontFamily: "Lato",
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20.sp),
+                                              fontSize: 18),
                                         ),
                                       ),
                                       (nearRestaurants == null
@@ -351,10 +404,10 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                               height: 22.h,
                                               alignment: Alignment.centerLeft,
                                               margin: EdgeInsets.symmetric(
-                                                  horizontal: 2.h),
+                                                  horizontal: 1.h),
                                               child: Row(
                                                 children: [
-                                                  GestureDetector(
+                                              /*    GestureDetector(
                                                       onTap: () {
                                                         nearController.animateTo(
                                                             nearController
@@ -373,34 +426,42 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                         child: Icon(
                                                           Icons.navigate_before,
                                                         ),
-                                                      )),
+                                                      )),*/
                                                   Expanded(
                                                     child: ListView.builder(
                                                       shrinkWrap: true,
                                                       controller:
                                                           nearController,
-                                                      scrollDirection:
-                                                          Axis.horizontal,
+                                                      scrollDirection: Axis.horizontal,
                                                       itemCount:
                                                           nearRestaurants ==
                                                                   null
                                                               ? 0
                                                               : nearRestaurants
                                                                       ?.data
-                                                                      ?.length ??
-                                                                  0,
+                                                                      ?.length ?? 0,
                                                       itemBuilder:
                                                           (context, index) {
                                                         return Container(
-                                                          height: 18.h,
-                                                          width: 20.h,
+                                                          height: 19.h,
+                                                          width: 18.h,
                                                           margin:
                                                               EdgeInsets.only(
-                                                                  right: 1.h,
-                                                                  bottom: 1.h),
+                                                                  right: 0.h,
+                                                                  bottom: 0.h),
                                                           child:
                                                               GestureDetector(
                                                             onTap: () async {
+                                                              // print(nearRestaurants?.data?[index].restaurantId);
+                                                              // print(nearRestaurants?.data?[index].restaurantname);
+
+                                                              setState((){
+                                                                index1=index;
+                                                                // print(deviceid);
+                                                                rid=nearRestaurants?.data?[index].restaurantId.toString();
+
+                                                              });
+                                                              getreview();
                                                               String? search =
                                                                   await Navigator.push(
                                                                       context,
@@ -414,10 +475,8 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                               nearRestaurants?.data?[index].restaurantname ?? '',
                                                                         ),
                                                                       ));
-                                                              print('sea' +
-                                                                  search
-                                                                      .toString());
-                                                              if (search !=
+
+                                                             if (search !=
                                                                   null) {
                                                                 if (search
                                                                     .isNotEmpty) {
@@ -437,10 +496,11 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                 children: [
                                                                   SizedBox(
                                                                     height:
-                                                                        16.h,
-                                                                    width: 17.h,
+                                                                        13.h,
+                                                                    width: 13.h,
                                                                     child:
-                                                                        CachedNetworkImage(
+                                                                    
+                                                                    CachedNetworkImage(
                                                                       imageUrl:
                                                                           nearRestaurants?.data?[index].image ??
                                                                               '',
@@ -469,10 +529,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                       errorWidget: (context,
                                                                               url,
                                                                               error) =>
+
                                                                           Image.asset(
                                                                               Res.profile_pic_placeholder),
                                                                     ),
                                                                   ),
+                                                                  SizedBox(height: 1.h,),
                                                                   Container(
                                                                     child:
                                                                         Flexible(
@@ -481,10 +543,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                         nearRestaurants?.data?[index].restaurantname ??
                                                                             '',
                                                                         textAlign:
-                                                                            TextAlign.center,
+                                                                            TextAlign.center,style: TextStyle(
+                                                                              fontSize: 16.0,
+                                                                              fontFamily:'Lato',fontWeight: FontWeight.bold),
                                                                       ),
                                                                     ),
-                                                                  ),
+                                                                  ),SizedBox(height: 1.h,),
                                                                   Flexible(
                                                                     child: Text(
                                                                       nearRestaurants
@@ -501,7 +565,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                       },
                                                     ),
                                                   ),
-                                                  GestureDetector(
+                                               /*   GestureDetector(
                                                       onTap: () {
                                                         nearController.animateTo(
                                                             nearController
@@ -520,18 +584,19 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                         child: Icon(
                                                           Icons.navigate_next,
                                                         ),
-                                                      )),
+                                                      )),*/
                                                 ],
                                               ),
                                             ),
-                                      Container(
+                                  /*  Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         margin: EdgeInsets.symmetric(
                                             vertical: 2.h, horizontal: 4.5.h),
                                         child: Text(
-                                          'Popular',
+                                          'Suggested',
                                           style: TextStyle(
+                                              fontFamily: "Lato",
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20.sp),
                                         ),
@@ -557,7 +622,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                               horizontal: 2.h),
                                           child: Row(
                                             children: [
-                                              GestureDetector(
+                                            /* GestureDetector(
                                                   onTap: () {
                                                     popularController.animateTo(
                                                         popularController
@@ -576,7 +641,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                     child: Icon(
                                                       Icons.navigate_before,
                                                     ),
-                                                  )),
+                                                  )),*/
                                               Expanded(
                                                 child: ListView.builder(
                                                   controller: popularController,
@@ -592,7 +657,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                       (context, index) {
                                                     return Container(
                                                       height: 18.h,
-                                                      width: 20.h,
+                                                      width: 18.h,
                                                       margin: EdgeInsets.only(
                                                           right: 1.h,
                                                           bottom: 1.h),
@@ -631,8 +696,8 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                     .center,
                                                             children: [
                                                               SizedBox(
-                                                                height: 16.h,
-                                                                width: 17.h,
+                                                                height: 13.h,
+                                                                width: 13.h,
                                                                 child:
                                                                     CachedNetworkImage(
                                                                   imageUrl: restaurants
@@ -673,6 +738,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                           Res.profile_pic_placeholder),
                                                                 ),
                                                               ),
+                                                              SizedBox(height: 1.h,),
                                                               Container(
                                                                 child: Flexible(
                                                                   child: Text(
@@ -682,10 +748,12 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                         '',
                                                                     textAlign:
                                                                         TextAlign
-                                                                            .center,
+                                                                            .center,style: TextStyle(fontSize: 16.0,
+                                                                      fontFamily:'Lato',fontWeight: FontWeight.bold)
                                                                   ),
                                                                 ),
                                                               ),
+                                                              SizedBox(height: 1.h,),
                                                               Flexible(
                                                                 child: Text(
                                                                   restaurants
@@ -703,7 +771,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                   },
                                                 ),
                                               ),
-                                              GestureDetector(
+                                          /*    GestureDetector(
                                                   onTap: () {
                                                     popularController.animateTo(
                                                         popularController
@@ -722,20 +790,21 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                     child: Icon(
                                                       Icons.navigate_next,
                                                     ),
-                                                  )),
+                                                  )),*/
                                             ],
                                           ),
-                                        ),
+                                        ),*/
                                       Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         margin: EdgeInsets.symmetric(
                                             vertical: 2.h, horizontal: 4.5.h),
                                         child: Text(
-                                          'New',
+                                          'Suggested',
                                           style: TextStyle(
+                                              fontFamily: "Lato",
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20.sp),
+                                              fontSize: 18),
                                         ),
                                       ),
                                       (newRestaurants == null
@@ -755,34 +824,34 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
-                                              height: 22.h,
+                                              height: 25.h,
                                               alignment: Alignment.centerLeft,
                                               margin: EdgeInsets.symmetric(
-                                                  horizontal: 2.h),
+                                                  horizontal: 1.h),
                                               child: Row(
                                                 children: [
-                                                  GestureDetector(
-                                                      onTap: () {
-                                                        newController.animateTo(
-                                                            newController
-                                                                    .offset -
-                                                                30.h,
-                                                            duration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        500),
-                                                            curve: Curves
-                                                                .easeInOut);
-                                                      },
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(
-                                                            16.0),
-                                                        child: Icon(
-                                                          Icons.navigate_before,
-                                                        ),
-                                                      )),
-                                                  Expanded(
-                                                    child: ListView.builder(
+                                               //   GestureDetector(
+                                             //         onTap: () {
+                                             //           newController.animateTo(
+                                            //                newController
+                                            //                        .offset -
+                                            //                    30.h,
+                                            //                duration:
+                                            //                    const Duration(
+                                           //                         milliseconds:
+                                           //                             500),
+                                           //                 curve: Curves
+                                           //                     .easeInOut);
+                                           //           },
+                                           //           child: const Padding(
+                                          //              padding: EdgeInsets.all(
+                                          //                  16.0),
+                                         //               child: Icon(
+                                           //               Icons.navigate_before,
+                                         //               ),
+                                        //             )),
+                                                  Expanded(child:
+                                                    ListView.builder(
                                                       controller: newController,
                                                       shrinkWrap: true,
                                                       scrollDirection:
@@ -797,15 +866,24 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                       itemBuilder:
                                                           (context, index) {
                                                         return Container(
-                                                          height: 18.h,
-                                                          width: 20.h,
+
+                                                          height: 25.h,
+                                                          width: 18.h,
                                                           margin:
                                                               EdgeInsets.only(
-                                                                  right: 1.h,
-                                                                  bottom: 1.h),
+                                                                  right: 0.h,
+                                                                  bottom:0.h),
                                                           child:
                                                               GestureDetector(
                                                             onTap: () async {
+                                                              // print( newRestaurants!.data![index].restaurantId ?? '');
+                                                              // print(newRestaurants!.data![index].zipcode ?? '');
+                                                             setState(() {
+                                                                rid=newRestaurants!.data![index].restaurantId ?? '';
+
+                                                              });
+
+                                                              getreview();
                                                               String? search =
                                                                   await Navigator.push(
                                                                       context,
@@ -818,7 +896,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                           restaurantName:
                                                                               newRestaurants?.data?[index].restaurantname ?? '',
                                                                         ),
-                                                                      ));
+                                                                      )) ;
                                                               if (search !=
                                                                   null) {
                                                                 if (search
@@ -838,9 +916,8 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                         .center,
                                                                 children: [
                                                                   SizedBox(
-                                                                    height:
-                                                                        16.h,
-                                                                    width: 17.h,
+                                                                    height:13.h,
+                                                                    width: 13.h,
                                                                     child:
                                                                         CachedNetworkImage(
                                                                       imageUrl:
@@ -874,7 +951,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                           Image.asset(
                                                                               Res.profile_pic_placeholder),
                                                                     ),
-                                                                  ),
+                                                                  ),SizedBox(height: 1.h,),
                                                                   Container(
                                                                     child:
                                                                         Flexible(
@@ -882,11 +959,15 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                                           Text(
                                                                         newRestaurants?.data?[index].restaurantname ??
                                                                             '',
-                                                                        textAlign:
-                                                                            TextAlign.center,
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                        maxLines: 2,
+                                                                        textAlign: TextAlign.center,
+                                                                              style: TextStyle(fontSize: 16.0,
+                                                                              fontFamily:'Lato',fontWeight: FontWeight.bold)
                                                                       ),
                                                                     ),
                                                                   ),
+                                                                  SizedBox(height: 1.h,),
                                                                   Flexible(
                                                                     child: Text(
                                                                       newRestaurants
@@ -903,26 +984,26 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                                                       },
                                                     ),
                                                   ),
-                                                  GestureDetector(
-                                                      onTap: () {
-                                                        newController.animateTo(
-                                                            newController
-                                                                    .offset +
-                                                                30.h,
-                                                            duration:
-                                                                const Duration(
-                                                                    milliseconds:
-                                                                        500),
-                                                            curve: Curves
-                                                                .easeInOut);
-                                                      },
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(
-                                                            16.0),
-                                                        child: Icon(
-                                                          Icons.navigate_next,
-                                                        ),
-                                                      )),
+                                                //  GestureDetector(
+                                                   //   onTap: () {
+                                                      //  newController.animateTo(
+                                                      //     newController
+                                                       //             .offset +
+                                                       //         30.h,
+                                                      //      duration:
+                                                        //       const Duration(
+                                                      //              milliseconds:
+                                                       //                 500),
+                                                     //      curve: Curves
+                                                      //          .easeInOut);
+                                                    //  },
+                                                     // child: const Padding(
+                                                    //    padding: EdgeInsets.all(
+                                                   //         16.0),
+                                                    //    child: Icon(
+                                                      //    Icons.navigate_next,
+                                                      //  ),
+                                                    //  )),
                                                 ],
                                               ),
                                             ),
@@ -969,7 +1050,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
           .map(
             (item) => Container(
               width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 4.5.h),
+              margin: EdgeInsets.symmetric(horizontal: 3.5.h),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: Colors.red,
@@ -1060,7 +1141,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
     });
   }
 
-  getPopular() async {
+ getPopular() async {
     setState(() {
       isLoading = true;
     });
@@ -1082,7 +1163,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
             setState(() {
               isLoading = false;
             });
-            buildErrorDialog(context, '', restaurantData.message.toString());
+          //  buildErrorDialog(context, '', restaurantData.message.toString());
           }
         }).catchError((onError) {
           getNew();
@@ -1138,6 +1219,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
   }
 
   getNearRest() {
+    print(nearRestaurants?.data?[index1].restaurantname);
     checkInternet().then((internet) async {
       if (internet) {
         RestaurantProviders()
@@ -1145,9 +1227,9 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
             .then((Response response) async {
           RestaurantData restaurantData =
               RestaurantData.fromJson(json.decode(response.body));
-
           if (response.statusCode == 200 && restaurantData.status == 1) {
             nearRestaurants = restaurantData;
+           // print(nearRestaurants?.message.toString());
             setState(() {
               isLoading = false;
             });
@@ -1167,6 +1249,53 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
           isLoading = false;
         });
         buildErrorDialog(context, 'Error', 'Internet Required');
+      }
+    });
+  }
+  getreview() {
+  print(deviceid.toString());
+    setState(() {
+      isLoading = false;
+    });
+    checkInternet().then((internet) async {
+      if (internet) {
+        AuthProviders()
+            .review(rid,deviceid)
+            .then((Response response) async {
+          ReviewModel reviewmodel = ReviewModel.fromJson(json.decode(response.body));
+            print(reviewmodel.status);
+            if (response.statusCode == 200 && reviewmodel.status == "Success") {
+            setState(() {
+              isLoading = false;
+            });
+            /*buildErrorDialog(
+              context,
+              '',
+              'Profile Updated',
+              callback: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            );*/
+            // }
+            // else {
+            //   setState(() {
+            //     isLoading = false;
+            //   });
+            //   buildErrorDialog(context, 'Error', userDataModel?.message ?? '');
+            // }
+          }
+        }).catchError((onError) {
+          setState(() {
+            isLoading = false;
+          });
+//          buildErrorDialog(context, 'Error', 'Something went wrong');
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+  //      buildErrorDialog(context, 'Error', 'Internet Required');
       }
     });
   }

@@ -46,8 +46,11 @@ class RestaurantProviders {
     bool serviceEnabled = await determinePosition();
     Map bodyData;
     if (serviceEnabled) {
-      print(serviceEnabled);
+      // print(serviceEnabled);
       Position? position = await getLocation();
+      print("1234");
+      print(( position?.latitude));
+      print(position?.longitude.toString(),);
       bodyData = {
         'action': 'get_popular_restaurant',
         'latitude': (position?.latitude == null)
@@ -75,6 +78,7 @@ class RestaurantProviders {
         throw const SocketException('Something went wrong');
       },
     );
+
     responseJson = responses(response);
     return responseJson;
   }

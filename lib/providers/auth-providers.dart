@@ -67,6 +67,7 @@ class AuthProviders {
         throw const SocketException('Something went wrong');
       },
     );
+    print(response.body);
     responseJson = responses(response);
 
     return responseJson;
@@ -121,6 +122,93 @@ class AuthProviders {
     };
     final response = await httpClient
         .post(Uri.parse(url), body: map, headers: headers)
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+
+    return responseJson;
+  }
+  Future<https.Response> review(rid,device) async {
+    const url = '$baseUrl/?action=widget_restaurant';
+    var responseJson;
+    final response = await httpClient
+        .post(Uri.parse(url),
+        body: {
+          'action': 'widget_restaurant',
+          'r_id': rid ?? "" ,
+          'clicks':"1",
+          'device_id' : device ?? "" ,
+        },
+        headers: headers)
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+
+    responseJson = responses(response);
+    return responseJson;
+  }
+  Future<https.Response> reviewwine(rid,device,wid) async {
+    const url = '$baseUrl/?action=widget_wine';
+    var responseJson;
+    final response = await httpClient
+        .post(Uri.parse(url),
+        body: {
+          'action': 'widget_wine',
+          'r_id':rid ,
+          'clicks':"1",
+          'device_id': device,
+          'w_id': wid,
+        },
+        headers: headers)
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+    return responseJson;
+  }
+  Future<https.Response> reviewcocktail(rid,device,cid) async {
+    const url = '$baseUrl/?action=widget_cocktail';
+    var responseJson;
+
+    final response = await httpClient
+        .post(Uri.parse(url),
+        body: {
+          'action': 'widget_cocktail',
+          'r_id':rid ,
+          'clicks':"1",
+          'device_id': device,
+          'c_id': cid,
+        },
+        headers: headers)
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw const SocketException('Something went wrong');
+      },
+    );
+    responseJson = responses(response);
+
+    return responseJson;
+  }
+
+  Future<https.Response> forgetapi(body) async {
+    const url = '$baseUrl/?action=forget_password';
+    var responseJson;
+
+    final response = await httpClient
+        .post(Uri.parse(url),
+        body: body,
+        headers: headers)
         .timeout(
       const Duration(seconds: 30),
       onTimeout: () {

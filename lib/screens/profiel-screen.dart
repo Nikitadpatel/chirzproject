@@ -200,7 +200,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (internet) {
         AuthProviders().getProfileDetails().then((Response response) async {
           userDataModel = UserModel.fromJson(json.decode(response.body));
-
+          print(userDataModel?.data?.username);
+          print(userDataModel?.status);
           if (response.statusCode == 200 && userDataModel?.status == 1) {
             setState(() {
               isLoading = false;

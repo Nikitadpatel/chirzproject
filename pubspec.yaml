@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.3.2
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
@@ -56,7 +56,7 @@ dependencies:
   video_player: ^2.2.19
   url_launcher: ^6.0.20
   visibility_detector: ^0.2.2
-
+  get_ip_address: ^0.0.5
   scroll_to_index: ^2.1.1
   inview_notifier_list: ^3.0.0
   flutter_clean_calendar: ^1.1.0
@@ -64,6 +64,7 @@ dependencies:
     git:
       url: https://github.com/Ali-Azmoud/flutter_xlider.git
       ref: master
+
 
 
 dev_dependencies:
@@ -92,6 +93,8 @@ flutter:
     - assets/chirz_video.mp4
     - assets/fonts/poppins_bold.ttf
     - assets/new_icon.png
+    - assets/test.jpeg
+    - assets/images/chirz1.png
     - assets/fonts/poppins_semibold.ttf
     - assets/fonts/poppinsregular.ttf
     - assets/images/app_icon.png
@@ -113,6 +116,7 @@ flutter:
     - assets/images/Launch Screen.png
     - assets/images/fa-solid_wine-glass.png
     - assets/images/mdi_bottle-wine.png
+    - assets/images/mdi_bottle-wine (1).png
     - assets/images/Vector.png
     - assets/images/Right Actionable.png
     - assets/images/Vector (1).png

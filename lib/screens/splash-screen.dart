@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       width: double.infinity.w,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("assets/images/Launch Screen.png"),
+            image: AssetImage("assets/images/chirz1.png"),
             fit: BoxFit.cover),
       ),
     );

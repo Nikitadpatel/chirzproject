@@ -23,6 +23,7 @@ class FoodItemsProviders {
         throw const SocketException('Something went wrong');
       },
     );
+
     return response;
   }
 
@@ -143,7 +144,7 @@ class FoodItemsProviders {
         throw const SocketException('Something went wrong');
       },
     );
-    print(response.body);
+
     responseJson = responses(response);
 
     return responseJson;
